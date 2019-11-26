@@ -37,7 +37,14 @@ h1 {
 .clear{
     clear: left;
 }
-
+.create_board{
+    background-color: #546e7a;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 10px 20px;
+    border-radius: 10px;
+}
 button {
     background: #222;
     color: #fff;
@@ -111,6 +118,8 @@ section.board {
 
 .board-column-content {
     min-height: 49px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 10px;
 }
 
 .board-column-content:empty {

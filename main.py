@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect,jsonify
 from util import json_response
 
-import data_handler
+import data_handler, persistence
 
 app = Flask(__name__)
 
@@ -28,6 +28,7 @@ def get_boards():
 def new_board():
 
     new_title = request.get_json()
+    persistence.write_board_to_csv(new_title, 'data/boards.csv')
     return new_title
 
 
