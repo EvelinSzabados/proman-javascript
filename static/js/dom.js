@@ -17,16 +17,32 @@ export let dom = {
 
         let boardList = '';
 
-        for(let board of boards){
+        /*for(let board of boards){
             boardList += `
                 <li>${board.title}</li>
             `;
-        }
+        }*/
 
-        const outerHtml = `
+        /*const outerHtml = `
             <ul class="board-container">
                 ${boardList}
             </ul>
+        `;*/
+
+        for(let board of boards){
+            boardList += `
+                <section class="board">
+                    <div class="board-header">
+                        <span class="board-title">${board.title}</span>
+                        <button class="board-add">Add Card</button>
+                </div>
+                </section>
+            `;
+
+        const outerHtml = `
+            <div class="board-container">
+                ${boardList}
+            </div>
         `;
 
         let boardsContainer = document.querySelector('#boards');
