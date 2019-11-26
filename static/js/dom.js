@@ -3,7 +3,10 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
-        // This function should run once, when the page is loaded.
+        const create_btn = document.getElementById('add-board');
+        create_btn.addEventListener('click',function(){
+            dataHandler.createNewBoard('New board')
+        })
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called

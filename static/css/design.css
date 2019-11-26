@@ -6,10 +6,13 @@
     --status-4: #00C851;
 }
 
-body {
+body,html {
+
     min-width: 620px;
-    background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
+    background-image: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
+    background-repeat: repeat;
     font-family: sans-serif;
+
 }
 
 h1, .board-title, .board-column-title {
