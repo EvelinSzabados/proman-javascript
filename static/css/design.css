@@ -19,21 +19,24 @@ h1, .board-title, .board-column-title {
     font-weight: 100;
 }
 
-h1 {
+.main-header {
     text-align: center;
     font-size: 4em;
     letter-spacing: 5px;
     transform: scale(1.2, 1);
+    color: #404040;
 }
 
 .nav-link {
     text-decoration: none;
-    float: left;
-    margin: 10px 15px;
+    margin: 0px 15px;
     color: #404040;
     font-size: 18px;
 }
-.nav-link
+.navbar-light{
+    background-color: rgba(0,0,0,0.1);
+
+}
 .clear{
     clear: left;
 }
