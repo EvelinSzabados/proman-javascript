@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect,jsonify
 from util import json_response
 
 import data_handler
@@ -23,10 +23,12 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/new-board", methods=['POST'])
+@app.route("/new-board", methods=['GET','POST'])
 @json_response
 def new_board():
-    return "Sample board"
+
+    new_title = request.get_json()
+    return new_title
 
 
 @app.route("/get-cards/<int:board_id>")
