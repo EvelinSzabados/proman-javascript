@@ -18,6 +18,7 @@ body,html {
 h1, .board-title, .board-column-title {
     font-weight: 100;
 }
+button:focus {outline:0;}
 
 .main-header {
     text-align: center;
@@ -47,9 +48,11 @@ h1, .board-title, .board-column-title {
     font-size: 18px;
     margin: 10px 20px;
     border-radius: 10px;
+    outline: none;
 }
 .create_board:hover{
     background-color: #78909c;
+    outline: none;
 }
 button {
     background: #222;
