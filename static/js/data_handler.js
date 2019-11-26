@@ -19,6 +19,12 @@ export let dataHandler = {
     _api_post: function (url, data, callback) {
         // it is not called from outside
         // sends the data to the API, and calls callback function
+        fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())  // parse the response as JSON
+        .then(json_response => callback(json_response));
     },
     init: function () {
     },
@@ -47,9 +53,13 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (boardTitle) {
+
+    createNewBoard: function (boardTitle,callback) {
         // creates new board, saves it and calls the callback function with its data
-        console.log("Helloka");
+        this._api_post('/new-board', (response) => {
+            this._data = response;
+            callback(response);
+        });
     },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
