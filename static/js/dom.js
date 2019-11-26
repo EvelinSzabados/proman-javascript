@@ -1,16 +1,16 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     init: function () {
         const create_btn = document.getElementById('add-board');
-        create_btn.addEventListener('click',function(){
+        create_btn.addEventListener('click', function () {
             dataHandler.createNewBoard('New board')
         })
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
     },
@@ -19,18 +19,19 @@ export let dom = {
         // it adds necessary event listeners also
 
         let boardList = '';
-
-        for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
+        let outerHtml = '';
+        for (let board of boards) {
+            outerHtml += `
+         <section class="board">
+            <div class="board-header"><span class="board-title"> ${board.title}</span>
+                <button class="board-add">Add Card</button>
+                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+            </div>
+        
+        </section>
+        `;
         }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
