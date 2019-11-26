@@ -5,7 +5,7 @@ export let dom = {
     init: function () {
         const create_btn = document.getElementById('add-board');
         create_btn.addEventListener('click', function () {
-            dataHandler.createNewBoard('New board',callback)
+            dataHandler.createNewBoard('New board',console.log)
         })
     },
     loadBoards: function () {
