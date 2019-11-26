@@ -45,6 +45,9 @@ h1 {
     margin: 10px 20px;
     border-radius: 10px;
 }
+.create_board:hover{
+    background-color: #78909c;
+}
 button {
     background: #222;
     color: #fff;
@@ -83,14 +86,13 @@ section.board {
 }
 
 .board-add {
-    background-color: #546e7a;
-
+    background-color: darkgoldenrod;
     font-size: 15px;
     border-radius: 15px;
 }
 
 .board-add:hover {
-    background-color: #78909c;
+    background-color: chocolate;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -104,6 +106,17 @@ section.board {
 .nav-item {
     margin-right: 20px;
     font-size: 18px;
+}
+
+.board_title_input{
+    border: none;
+    padding: 10px;
+    margin-top: 3px;
+    outline: none;
+    vertical-align: center ;
+    color: darkslategrey;
+    font-size: 19px;
+    width: 100px;
 }
 
 .board-columns {

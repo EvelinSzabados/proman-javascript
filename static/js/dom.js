@@ -20,6 +20,7 @@ export let dom = {
             outerHtml += `
          <section class="board">
             <div class="board-header"><span class="board-title"> ${title}</span>
+                <button class="board-add">Add Column</button>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
             </div>
@@ -65,7 +66,8 @@ export let dom = {
         for (let board of boards) {
             outerHtml += `
          <section class="board">
-            <div class="board-header"><span class="board-title"> ${board.title}</span>
+            <div class="board-header"><input class="board_title_input" value="${board.title}"></input>
+                <button class="board-add">Add Column</button>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
             </div>

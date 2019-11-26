@@ -24,7 +24,7 @@ def _read_csv(file_name):
 def write_board_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
-    
+
         writer.writerow({'id': 0, 'title': title})
 
 
