@@ -5,7 +5,7 @@ export let dom = {
     init: function () {
         const create_btn = document.getElementById('add-board');
         create_btn.addEventListener('click', function () {
-            dataHandler.createNewBoard('New board')
+            dataHandler.createNewBoard('New board',console.log)
         })
     },
     loadBoards: function () {
@@ -18,7 +18,7 @@ export let dom = {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
-        let boardList = '';
+
         let outerHtml = '';
         for (let board of boards) {
             outerHtml += `
