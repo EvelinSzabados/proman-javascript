@@ -85,6 +85,7 @@ section.board {
     margin: 13px;
     display: inline-block;
     font-size: 20px;
+    outline-color: #efefef;
 }
 
 .board-title, .board-add, .board-toggle {
@@ -103,6 +104,7 @@ section.board {
     transition: 0.5s;
     cursor: pointer;
 }
+
 
 .board-toggle {
     float: right;

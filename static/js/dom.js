@@ -7,10 +7,6 @@ export let dom = {
         create_btn.addEventListener('click', function () {
             dataHandler.createNewBoard("Sample", dom.showNewBoard)
         })
-        const create_status_btn = document.getElementById('add-status');
-        create_status_btn.addEventListener('click',function(){
-            dataHandler.createNewStatus('New Status',dom.loadStatuses) //reload tables
-        })
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -20,18 +16,13 @@ export let dom = {
     },
     loadStatuses: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getStatuses('valami',function (statuses) {
-            dom.showStatuses(statuses);
-        });
+
     },
-
-
     showNewBoard: function (new_board_data) {
         let outerHtml = '';
-            outerHtml += `
+        outerHtml += `
          <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${new_board_data.id}"> ${new_board_data.title}</span>
-                <button class="board-add">Add Column</button>
+            <div class="board-header"><span class="board-title" id="board_${new_board_data.id}" contenteditable="true"> ${new_board_data.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${new_board_data.id}" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
             </div>
@@ -66,6 +57,19 @@ export let dom = {
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        const editable = document.getElementById(`board_${new_board_data.id}`);
+
+        editable.addEventListener('keypress', function(e){
+            if(e.code === "Enter"){
+                editable.contentEditable = "false";
+                let new_title = editable.innerText;
+                // localStorage.setItem('title', new_title);
+                // localStorage.setItem('board_id', new_board_data.id);
+                dataHandler.renameBoard(new_title,new_board_data.id,console.log);
+                editable.contentEditable = "true";
+            }
+        })
+
     },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
@@ -73,13 +77,14 @@ export let dom = {
 
 
         let outerHtml = '';
+
         for (let board of boards) {
+
             outerHtml += `
           <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${board.id}"> ${board.title}</span>
-                <button class="board-add">Add Column</button>
+            <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="false"> ${board.title}</span>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
             </div>
             <div class="collapse" id="collapseExample${board.id}">
                 <div class="card card-body">
@@ -114,20 +119,11 @@ export let dom = {
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
 
+
     },
+    showStatuses: function (statuses) {
 
-
-        showStatuses:function (statuses) {
-
-       let outerHTML = '';
-       for (let status of statuses) {
-           outerHTML += ``;
-       }
-       let boardsContainer = document.querySelector('#boards');
-       boardsContainer.insertAdjacentHTML("beforeend", outerHTML);
     },
-
-
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
     },
