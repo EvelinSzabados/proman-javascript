@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect,jsonify
 from util import json_response
 
-import data_handler
+import data_handler, persistence
 
 app = Flask(__name__)
 
@@ -23,12 +23,13 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/new-board", methods=['POST'])
+@app.route("/new-board", methods=['GET','POST'])
 @json_response
 def new_board():
-    if request.method=="post":
-        return "Post"
-    return "Not a post"
+
+    new_title = request.get_json()
+    persistence.write_board_to_csv(new_title, 'data/boards.csv')
+    return new_title
 
 
 @app.route("/get-cards/<int:board_id>")

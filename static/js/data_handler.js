@@ -13,18 +13,22 @@ export let dataHandler = {
             method: 'GET',
             credentials: 'same-origin'
         })
-        .then(response => response.json())  // parse the response as JSON
-        .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
     _api_post: function (url, data, callback) {
         // it is not called from outside
         // sends the data to the API, and calls callback function
         fetch(url, {
             method: 'POST',
-            credentials: 'same-origin'
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(data)
         })
-        .then(response => response.json())  // parse the response as JSON
-        .then(json_response => callback(json_response));
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response));
     },
     init: function () {
     },
@@ -54,9 +58,9 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
 
-    createNewBoard: function (boardTitle,callback) {
+    createNewBoard: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
-        this._api_post('/new-board',boardTitle, (response) => {
+        this._api_post('/new-board', boardTitle, (response) => {
             this._data = response;
             callback(response);
         });
