@@ -5,7 +5,7 @@ export let dom = {
     init: function () {
         const create_btn = document.getElementById('add-board');
         create_btn.addEventListener('click', function () {
-            dataHandler.createNewBoard('Rename me', dom.showNewBoard)
+            dataHandler.createNewBoard("Sample", dom.showNewBoard)
         })
         const create_status_btn = document.getElementById('add-status');
         create_status_btn.addEventListener('click',function(){
@@ -28,13 +28,18 @@ export let dom = {
 
     showNewBoard: function (new_board_data) {
         let outerHtml = '';
-
             outerHtml += `
          <section class="board">
             <div class="board-header"><span class="board-title" id="board_${new_board_data.id}"> ${new_board_data.title}</span>
                 <button class="board-add">Add Column</button>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${new_board_data.id}" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
+            </div>
+            <div class="collapse" id="collapseExample${new_board_data.id}">
+                <div class="card card-body">
+                    <div class="board-columns">
+                        Hello
+                    </div>
             </div>
            <div id="board_${board.id}_columns"></div>
           </section>
@@ -55,19 +60,26 @@ export let dom = {
             <div class="board-header"><span class="board-title" id="board_${board.id}"> ${board.title}</span>
                 <button class="board-add">Add Column</button>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
             </div>
+            <div class="collapse" id="collapseExample${board.id}">
+                <div class="card card-body">
+                    <div class="board-columns">
+                        Hello
+                    </div>
+                </div>
+            
           </section>
         `;
         }
 
-
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+
     },
 
 
-    showStatuses:function (statuses) {
+        showStatuses:function (statuses) {
 
        let outerHTML = '';
        for (let status of statuses) {
