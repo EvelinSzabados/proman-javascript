@@ -5,7 +5,7 @@ export let dom = {
     init: function () {
         const create_btn = document.getElementById('add-board');
         create_btn.addEventListener('click', function () {
-            dataHandler.createNewBoard('New board',dom.showNewBoard)
+            dataHandler.createNewBoard('Sample board',dom.showNewBoard)
         })
     },
     loadBoards: function () {
@@ -14,12 +14,12 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
-    showNewBoard: function(title){
+    showNewBoard: function(new_board_data){
            let outerHtml = '';
 
             outerHtml += `
          <section class="board">
-            <div class="board-header"><span class="board-title"> ${title}</span>
+            <div class="board-header"><span class="board-title" id="board_${new_board_data.id}"> ${new_board_data.title}</span>
                 <button class="board-add">Add Column</button>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
