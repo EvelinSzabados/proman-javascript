@@ -40,7 +40,9 @@ def write_board_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
         new_id = add_id_to_new_board(file_name)
-        writer.writerow({'id': new_id, 'title': title})
+        new_data_row = {'id': new_id, 'title': title}
+        writer.writerow(new_data_row)
+    return new_data_row
 
 def write_statuses_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:

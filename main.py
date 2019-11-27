@@ -37,8 +37,8 @@ def get_statuses():
 def new_board():
 
     new_title = request.get_json()
-    persistence.write_board_to_csv(new_title, 'data/boards.csv')
-    return new_title
+    new_board_data = persistence.write_board_to_csv(new_title, 'data/boards.csv')
+    return new_board_data
 
 
 @app.route("/get-cards/<int:board_id>")
