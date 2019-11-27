@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect,jsonify
+from flask import Flask, render_template, url_for, request, redirect, jsonify
 from util import json_response
 
 import data_handler, persistence
@@ -32,10 +32,9 @@ def get_statuses():
     return persistence.get_statuses()
 
 
-@app.route("/new-board", methods=['GET','POST'])
+@app.route("/new-board", methods=['GET', 'POST'])
 @json_response
 def new_board():
-
     new_title = request.get_json()
     new_board_data = persistence.write_board_to_csv(new_title, 'data/boards.csv')
     return new_board_data
@@ -51,13 +50,13 @@ def get_cards_for_board(board_id: int):
     return data_handler.get_cards_for_board(board_id)
 
 
-@app.route("/create-new-status", methods=['GET','POST'])
+@app.route("/create-new-status", methods=['GET', 'POST'])
 @json_response
 def create_new_status():
-
-    new_statuses=request.get_json()
-    persistence.write_board_to_csv(new_statuses,'data/statuses.csv')
+    new_statuses = request.get_json()
+    persistence.write_board_to_csv(new_statuses, 'data/statuses.csv')
     return new_statuses
+
 
 def main():
     app.run(debug=True)
