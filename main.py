@@ -23,13 +23,17 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/get-statuses")
+@app.route("/get-statuses", methods=['GET','POST'])
 @json_response
 def get_statuses():
     """
     All the statuses
     """
-    return persistence.get_statuses()
+    board_id = request.get_json()
+    caught_board_id = persistence.get_statuses(force=True)
+    print(board_id)
+    print(caught_board_id)
+    return caught_board_id
 
 
 @app.route("/new-board", methods=['GET', 'POST'])
