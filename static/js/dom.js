@@ -38,7 +38,7 @@ export let dom = {
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-       
+
     },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
