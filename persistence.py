@@ -21,12 +21,32 @@ def _read_csv(file_name):
         return formatted_data
 
 
+def add_id_to_new_board(file_name):
+    existing_boards = _read_csv(file_name)
+    new_id = 0
+    length_of_boards_list = len(existing_boards)
+    i = 0
+    while i < length_of_boards_list:
+        for key, value in existing_boards[i].items():
+            if key == "id":
+                if int(value) > new_id:
+                    new_id = int(value)
+        i += 1
+    new_id += 1
+    return new_id
+
+
 def write_board_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
-    
-        writer.writerow({'id': 0, 'title': title})
+        new_id = add_id_to_new_board(file_name)
+        writer.writerow({'id': new_id, 'title': title})
 
+def write_statuses_to_csv(title, file_name):
+    with open(file_name, 'a', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
+        new_id = add_id_to_new_board(file_name)
+        writer.writerow({'id': new_id, 'title': title})
 
 def _get_data(data_type, file, force):
     """

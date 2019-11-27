@@ -23,6 +23,15 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/get-statuses")
+@json_response
+def get_statuses():
+    """
+    All the statuses
+    """
+    return persistence.get_statuses()
+
+
 @app.route("/new-board", methods=['GET','POST'])
 @json_response
 def new_board():
@@ -41,6 +50,14 @@ def get_cards_for_board(board_id: int):
     """
     return data_handler.get_cards_for_board(board_id)
 
+
+@app.route("/create-new-status", methods=['GET','POST'])
+@json_response
+def create_new_status():
+
+    new_statuses=request.get_json()
+    persistence.write_board_to_csv(new_statuses,'data/statuses.csv')
+    return new_statuses
 
 def main():
     app.run(debug=True)

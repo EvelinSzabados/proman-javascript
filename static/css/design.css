@@ -18,22 +18,26 @@ body,html {
 h1, .board-title, .board-column-title {
     font-weight: 100;
 }
+button:focus {outline:0;}
 
-h1 {
+.main-header {
     text-align: center;
     font-size: 4em;
     letter-spacing: 5px;
     transform: scale(1.2, 1);
+    color: #404040;
 }
 
 .nav-link {
     text-decoration: none;
-    float: left;
-    margin: 10px 15px;
+    margin: 0px 15px;
     color: #404040;
     font-size: 18px;
 }
-.nav-link
+.navbar-light{
+    background-color: rgba(0,0,0,0.1);
+
+}
 .clear{
     clear: left;
 }
@@ -44,6 +48,11 @@ h1 {
     font-size: 18px;
     margin: 10px 20px;
     border-radius: 10px;
+    outline: none;
+}
+.create_board:hover{
+    background-color: #78909c;
+    outline: none;
 }
 button {
     background: #222;
@@ -83,14 +92,13 @@ section.board {
 }
 
 .board-add {
-    background-color: #546e7a;
-
+    background-color: darkgoldenrod;
     font-size: 15px;
     border-radius: 15px;
 }
 
 .board-add:hover {
-    background-color: #78909c;
+    background-color: chocolate;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -104,6 +112,17 @@ section.board {
 .nav-item {
     margin-right: 20px;
     font-size: 18px;
+}
+
+.board_title_input{
+    border: none;
+    padding: 10px;
+    margin-top: 3px;
+    outline: none;
+    vertical-align: center ;
+    color: darkslategrey;
+    font-size: 19px;
+    width: 100px;
 }
 
 .board-columns {
