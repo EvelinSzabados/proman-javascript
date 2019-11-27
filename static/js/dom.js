@@ -37,28 +37,30 @@ export let dom = {
             </div>
             <div class="collapse" id="collapseExample${new_board_data.id}">
                 <div class="card card-body">
-                                     <div class="board-column">
-                <div class="board-column-title">New</div>
-                <div class="board-column-content">
+                    <div class="board-columns">
+                        <div class="board-column">
+                            <div class="board-column-title">New</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">In Progress</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">Testing</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">Done</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="board-column">
-                <div class="board-column-title">In Progress</div>
-                <div class="board-column-content">
-                </div>
-            </div>
-            <div class="board-column">
-                <div class="board-column-title">Testing</div>
-                <div class="board-column-content">
-                </div>
-            </div>
-            <div class="board-column">
-                <div class="board-column-title">Done</div>
-                <div class="board-column-content">
-                </div>
-             </div>
-             </div>
-             </div>
           </section>
         `;
 
@@ -81,28 +83,30 @@ export let dom = {
             </div>
             <div class="collapse" id="collapseExample${board.id}">
                 <div class="card card-body">
-                     <div class="board-column">
-                <div class="board-column-title">New</div>
-                <div class="board-column-content">
+                 <div class="board-columns">
+                        <div class="board-column">
+                            <div class="board-column-title">New</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">In Progress</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">Testing</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title">Done</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="board-column">
-                <div class="board-column-title">In Progress</div>
-                <div class="board-column-content">
-                </div>
-            </div>
-            <div class="board-column">
-                <div class="board-column-title">Testing</div>
-                <div class="board-column-content">
-                </div>
-            </div>
-            <div class="board-column">
-                <div class="board-column-title">Done</div>
-                <div class="board-column-content">
-                </div>
-             </div>
-             </div>
-             </div>
           </section>
         `;
         }
