@@ -47,10 +47,10 @@ export let dataHandler = {
     },
     getStatuses: function (columnId, callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
-        // this._api_get('/get-statuses',columnId,  (response) => {
-        //     this._data = response;
-        //     callback(response);
-        // });
+         this._api_get('/get-statuses',columnId,  (response) => {
+             this._data = response;
+             callback(response);
+         });
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
