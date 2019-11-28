@@ -59,13 +59,11 @@ export let dom = {
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         const editable = document.getElementById(`board_${new_board_data.id}`);
 
-        editable.addEventListener('keypress', function(e){
-            if(e.code === "Enter"){
+        editable.addEventListener('keypress', function (e) {
+            if (e.code === "Enter") {
                 editable.contentEditable = "false";
                 let new_title = editable.innerText;
-                // localStorage.setItem('title', new_title);
-                // localStorage.setItem('board_id', new_board_data.id);
-                dataHandler.renameBoard(new_title,new_board_data.id,console.log);
+                dataHandler.renameBoard(new_title, new_board_data.id, console.log);
                 editable.contentEditable = "true";
             }
         })
@@ -82,7 +80,7 @@ export let dom = {
 
             outerHtml += `
           <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="false"> ${board.title}</span>
+            <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="true"> ${board.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
             </div>
@@ -119,6 +117,17 @@ export let dom = {
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
 
+        for (let board of boards) {
+            const editable = document.getElementById(`board_${board.id}`);
+            editable.addEventListener('keypress', function (e) {
+                if (e.code === "Enter") {
+                    editable.contentEditable = "false";
+                    let new_title = editable.innerText;
+                    dataHandler.renameBoard(new_title, board.id, console.log);
+                    editable.contentEditable = "true";
+                }
+            })
+        }
 
     },
     showStatuses: function (statuses) {
