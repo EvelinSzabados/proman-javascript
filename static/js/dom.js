@@ -173,7 +173,7 @@ export let dom = {
                     columnInProgress.innerHTML += new_content
                 }if(card.status_id == 2){
                     columnTesting.innerHTML += new_content
-                }else{
+                }if(card.status_id == 3){
                     columnDone.innerHTML += new_content
                 }
 
