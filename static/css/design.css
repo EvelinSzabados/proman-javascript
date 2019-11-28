@@ -173,19 +173,19 @@ section.board {
     padding: 4px;
 }
 
-.board-column:nth-of-type(1) .card {
+.board-column:nth-of-type(1) .Card {
     background: var(--status-1);
 }
 
-.board-column:nth-of-type(2) .card {
+.board-column:nth-of-type(2) .Card {
     background: var(--status-2);
 }
 
-.board-column:nth-of-type(3) .card {
+.board-column:nth-of-type(3) .Card {
     background: var(--status-3);
 }
 
-.board-column:nth-of-type(4) .card {
+.board-column:nth-of-type(4) .Card {
     background: var(--status-4);
 }
 

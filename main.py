@@ -55,8 +55,8 @@ def new_board_title():
 @app.route("/get-cards/<board_id>", methods=['GET', 'POST'])
 @json_response
 def get_cards_for_board(board_id: int):
-
-    return board_id
+    print(board_id)
+    return data_handler.get_cards_for_board(board_id)
 
 
 @app.route("/create-new-status", methods=['GET', 'POST'])
