@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect,jsonify
+from flask import Flask, render_template, url_for, request, redirect, jsonify
 from util import json_response
 
 import data_handler, persistence
@@ -23,12 +23,32 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/get-statuses", methods=['GET', 'POST'])
+@json_response
+def get_statuses():
+    """
+    All the statuses
+    """
+    board_id = request.get_json()
+    caught_board_id = persistence.get_statuses(force=True)
+    print(board_id)
+    print(caught_board_id)
+    return caught_board_id
+
+
 @app.route("/new-board", methods=['GET','POST'])
 @json_response
 def new_board():
-
     new_title = request.get_json()
     new_board_data = persistence.write_board_to_csv(new_title, 'data/boards.csv')
+    return new_board_data
+
+
+@app.route("/new-board-title", methods=['POST'])
+@json_response
+def new_board_title():
+    new_data = request.get_json()
+    new_board_data = persistence.modify_board_title(new_data, 'data/boards.csv',)
     return new_board_data
 
 
@@ -40,6 +60,14 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/create-new-status", methods=['GET', 'POST'])
+@json_response
+def create_new_status():
+    new_statuses = request.get_json()
+    persistence.write_board_to_csv(new_statuses, 'data/statuses.csv')
+    return new_statuses
 
 
 def main():

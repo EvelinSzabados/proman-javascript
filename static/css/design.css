@@ -85,10 +85,12 @@ section.board {
     margin: 13px;
     display: inline-block;
     font-size: 20px;
+    outline-color: #efefef;
 }
 
 .board-title, .board-add, .board-toggle {
     display: inline-block;
+
 }
 
 .board-add {
@@ -103,10 +105,19 @@ section.board {
     cursor: pointer;
 }
 
+
 .board-toggle {
     float: right;
     margin: 13px;
     background-color: #546e7a;
+}
+.collapse{
+    background-color: transparent;
+}
+.card{
+    background-color: rgba(255,255,255,0.1);
+    color: #404040;
+    border:none;
 }
 
 .nav-item {
@@ -153,7 +164,7 @@ section.board {
     text-align: center;
 }
 
-.card {
+.Card {
     position: relative;
     background: #222;
     color: #fff;

@@ -45,8 +45,12 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getStatuses: function (callback) {
+    getStatuses: function (columnId, callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
+         this._api_get('/get-statuses',columnId,  (response) => {
+             this._data = response;
+             callback(response);
+         });
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
@@ -57,7 +61,6 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-
     createNewBoard: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
         this._api_post('/new-board', boardTitle, (response) => {
@@ -65,8 +68,22 @@ export let dataHandler = {
             callback(response);
         });
     },
+    createNewStatus: function (boardTitle, callback) {
+        // creates new board, saves it and calls the callback function with its data
+        this._api_post('/create-new-status', boardTitle, (response) => {
+            this._data = response;
+            callback(response);
+        });
+    },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
+    },
+    renameBoard: function(newTitle,boardId,callback){
+        let new_header = {"id": boardId, "title": newTitle};
+        this._api_post('/new-board-title', new_header, (response) => {
+            this._data = response;
+            callback(response);
+        });
     }
     // here comes more features
 };

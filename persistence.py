@@ -1,4 +1,4 @@
-import csv
+import csv, data_handler
 
 STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
@@ -36,6 +36,24 @@ def add_id_to_new_board(file_name):
     return new_id
 
 
+def modify_board_title(new_data, file_name):
+
+    all_data = get_boards(force=True)
+
+    with open(file_name, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
+        writer.writeheader()
+
+        for line in all_data:
+
+            if int(line['id']) == int(new_data['id']):
+
+                line['title'] = new_data['title']
+
+            writer.writerow(line)
+
+
+
 def write_board_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
@@ -43,6 +61,13 @@ def write_board_to_csv(title, file_name):
         new_data_row = {'id': new_id, 'title': title}
         writer.writerow(new_data_row)
     return new_data_row
+
+
+def write_statuses_to_csv(title, file_name):
+    with open(file_name, 'a', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
+        new_id = add_id_to_new_board(file_name)
+        writer.writerow({'id': new_id, 'title': title})
 
 
 def _get_data(data_type, file, force):
