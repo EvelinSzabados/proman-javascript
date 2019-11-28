@@ -11,10 +11,26 @@ export let dataHandler = {
 
         fetch(url, {
             method: 'GET',
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+
         })
             .then(response => response.json())  // parse the response as JSON
             .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+    },
+    _get_api_card: function(url,data,callback){
+        fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(data)
+
+        })
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+
     },
     _api_post: function (url, data, callback) {
         // it is not called from outside
@@ -55,7 +71,11 @@ export let dataHandler = {
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
     },
-    getCardsByBoardId: function (boardId, callback) {
+    getCardsByBoardId: function (board_id, callback) {
+        this._api_get('get-cards/3' ,(response) => {
+            this._data = response;
+            callback(response);
+        });
         // the cards are retrieved and then the callback function is called with the cards
     },
     getCard: function (cardId, callback) {

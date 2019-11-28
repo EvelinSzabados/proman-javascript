@@ -52,14 +52,11 @@ def new_board_title():
     return new_board_data
 
 
-@app.route("/get-cards/<int:board_id>")
+@app.route("/get-cards/<board_id>", methods=['GET', 'POST'])
 @json_response
 def get_cards_for_board(board_id: int):
-    """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
-    """
-    return data_handler.get_cards_for_board(board_id)
+
+    return board_id
 
 
 @app.route("/create-new-status", methods=['GET', 'POST'])

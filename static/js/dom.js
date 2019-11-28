@@ -59,6 +59,7 @@ export let dom = {
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         const editable = document.getElementById(`board_${new_board_data.id}`);
         editable.spellcheck = false;
+        dom.loadCards(new_board_data.id);
 
         editable.addEventListener('keypress', function (e) {
             if (e.code === "Enter") {
@@ -89,23 +90,24 @@ export let dom = {
                 <div class="card card-body">
                  <div class="board-columns">
                         <div class="board-column">
-                            <div class="board-column-title">New</div>
-                            <div class="board-column-content">
+                            <div class="board-column-title" >New</div>
+                            <div class="board-column-content" id="column-new-${board.id}">
+                            
                             </div>
                         </div>
                         <div class="board-column">
                             <div class="board-column-title">In Progress</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-in-progress-${board.id}">
                             </div>
                         </div>
                         <div class="board-column">
                             <div class="board-column-title">Testing</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-testing-${board.id}">
                             </div>
                         </div>
                         <div class="board-column">
                             <div class="board-column-title">Done</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-done-${board.id}">
                             </div>
                         </div>
                     </div>
@@ -136,11 +138,15 @@ export let dom = {
 
     },
     loadCards: function (boardId) {
+        dataHandler.getCardsByBoardId(function (boardId) {
+            dom.showCards(boardId);
+        });
         // retrieves cards and makes showCards called
     },
     showCards: function (cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
+        console.log(cards)
     },
     // here comes more features
 };
