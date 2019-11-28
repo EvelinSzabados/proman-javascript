@@ -12,6 +12,9 @@ export let dom = {
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
+            dataHandler.getStatuses(function(statuses){
+                dom.showStatuses(statuses)
+            });
         });
     },
     loadStatuses: function () {
@@ -79,35 +82,13 @@ export let dom = {
         for (let board of boards) {
 
             outerHtml += `
-          <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="true"> ${board.title}</span>
+           <section class="board" id="board_${board.id}">
+            <div class="board-header"><span class="board-title" contenteditable="true"> ${board.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
             </div>
             <div class="collapse" id="collapseExample${board.id}">
                 <div class="card card-body">
-                 <div class="board-columns">
-                        <div class="board-column">
-                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div></div>
-                            <div class="board-column-content">
-                            </div>
-                        </div>
-                        <div class="board-column">
-                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
-                            <div class="board-column-content">
-                            </div>
-                        </div>
-                        <div class="board-column">
-                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
-                            <div class="board-column-content">
-                            </div>
-                        </div>
-                        <div class="board-column">
-                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
-                            <div class="board-column-content">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
           </section>
@@ -128,20 +109,38 @@ export let dom = {
                 }
             })
         }
-        for (let column of boards) {
-            const editable = document.getElementById(`column_${column.id}`);
-            editable.addEventListener('keypress', function (e) {
-                if (e.code === "Enter") {
-                    editable.contentEditable = "false";
-                    let new_title = editable.innerText;
-                    dataHandler.renameStatus(new_title, column.id, console.log);
-                    editable.contentEditable = "true";
-                }
-            })
-        }
     },
     showStatuses: function (statuses) {
-
+        let outerHtml = '';
+        for (let status of statuses) {
+            outerHtml += `<div class="board-columns">
+                        <div class="board-column">
+                            <div class="board-column-title"id="status_${board.id}"contenteditable="true"> ${board.title}</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title"id="status_${board.id}"contenteditable="true"> ${board.title}</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title"id="status_${board.id}"contenteditable="true"> ${board.title}</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                        <div class="board-column">
+                            <div class="board-column-title"id="status_${board.id}"contenteditable="true"> ${board.title}</div>
+                            <div class="board-column-content">
+                            </div>
+                        </div>
+                    </div>
+                   `;
+                    }
+        let searched_boards = document.querySelectorAll(".board");
+        for(let i of searched_boards){
+            outerHtml.insertAdjacentHTML("beforeend", outerHtml)
+        }
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
