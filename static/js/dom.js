@@ -60,5 +60,26 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
+    showStatuses: function (boards) {
+        // shows boards appending them to #boards div
+        // it adds necessary event listeners also
+
+
+        let outerHtml = '';
+        for (let board of boards) {
+            outerHtml += `
+          <section class="board">
+            <div class="board-header"><span class="board-title" id="board_${board.id}"> ${board.title}</span>
+                <button class="board-add">Add Column</button>
+                <button class="board-add">Add Card</button>
+                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+            </div>
+          </section>
+        `;
+        }
+
+        let boardsContainer = document.querySelector('#boards');
+        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+    },
     // here comes more features
 };
