@@ -34,7 +34,7 @@ export let dom = {
                             <div class="board-column-content">
                             </div>
                         </div>
-                        <div class="board-column">
+                        <div class="board-column"> 
                             <div class="board-column-title">In Progress</div>
                             <div class="board-column-content">
                             </div>
@@ -58,6 +58,7 @@ export let dom = {
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         const editable = document.getElementById(`board_${new_board_data.id}`);
+        editable.spellcheck = false;
 
         editable.addEventListener('keypress', function (e) {
             if (e.code === "Enter") {
@@ -119,6 +120,7 @@ export let dom = {
 
         for (let board of boards) {
             const editable = document.getElementById(`board_${board.id}`);
+            editable.spellcheck = false;
             editable.addEventListener('keypress', function (e) {
                 if (e.code === "Enter") {
                     editable.contentEditable = "false";
