@@ -68,13 +68,13 @@ export let dataHandler = {
             callback(response);
         });
     },
-    createNewStatus: function (boardTitle, callback) {
+    /*createNewStatus: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
         this._api_post('/create-new-status', boardTitle, (response) => {
             this._data = response;
             callback(response);
         });
-    },
+    },*/
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
     },
@@ -84,6 +84,14 @@ export let dataHandler = {
             this._data = response;
             callback(response);
         });
+    },
+    renameStatus: function(newTitle,statusId,callback){
+        let new_header = {"id": statusId, "title": newTitle};
+        this._api_post('/new-status-title', new_header, (response) => {
+            this._data = response;
+            callback(response);
+        });
     }
     // here comes more features
+
 };

@@ -88,22 +88,22 @@ export let dom = {
                 <div class="card card-body">
                  <div class="board-columns">
                         <div class="board-column">
-                            <div class="board-column-title">New</div>
+                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div></div>
                             <div class="board-column-content">
                             </div>
                         </div>
                         <div class="board-column">
-                            <div class="board-column-title">In Progress</div>
+                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
                             <div class="board-column-content">
                             </div>
                         </div>
                         <div class="board-column">
-                            <div class="board-column-title">Testing</div>
+                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
                             <div class="board-column-content">
                             </div>
                         </div>
                         <div class="board-column">
-                            <div class="board-column-title">Done</div>
+                            <div class="board-column-title" id="column_${column.id}" contenteditable="true"> ${column.title}</div>
                             <div class="board-column-content">
                             </div>
                         </div>
@@ -128,7 +128,17 @@ export let dom = {
                 }
             })
         }
-
+        for (let column of boards) {
+            const editable = document.getElementById(`column_${column.id}`);
+            editable.addEventListener('keypress', function (e) {
+                if (e.code === "Enter") {
+                    editable.contentEditable = "false";
+                    let new_title = editable.innerText;
+                    dataHandler.renameStatus(new_title, column.id, console.log);
+                    editable.contentEditable = "true";
+                }
+            })
+        }
     },
     showStatuses: function (statuses) {
 

@@ -62,12 +62,12 @@ def get_cards_for_board(board_id: int):
     return data_handler.get_cards_for_board(board_id)
 
 
-@app.route("/create-new-status", methods=['GET', 'POST'])
+@app.route("/new-status-title", methods=['GET', 'POST'])
 @json_response
-def create_new_status():
-    new_statuses = request.get_json()
-    persistence.write_board_to_csv(new_statuses, 'data/statuses.csv')
-    return new_statuses
+def new_status_title():
+    new_data = request.get_json()
+    new_status_data = persistence.modify_status_title(new_data, 'data/statuses.csv', )
+    return new_status_data
 
 
 def main():

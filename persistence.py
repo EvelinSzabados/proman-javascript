@@ -53,6 +53,22 @@ def modify_board_title(new_data, file_name):
             writer.writerow(line)
 
 
+def modify_status_title(new_data, file_name):
+
+    all_data = get_statuses(force=True)
+
+    with open(file_name, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
+        writer.writeheader()
+
+        for line in all_data:
+
+            if int(line['id']) == int(new_data['id']):
+
+                line['title'] = new_data['title']
+
+            writer.writerow(line)
+
 
 def write_board_to_csv(title, file_name):
     with open(file_name, 'a', newline='', encoding='utf-8') as file:
