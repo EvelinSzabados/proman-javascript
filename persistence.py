@@ -36,14 +36,22 @@ def add_id_to_new_board(file_name):
     return new_id
 
 
-def modify_board_title(new_title, board_id, file_name):
-    with open(file_name, 'w', newline='', encoding='utf-8') as file_name:
+def modify_board_title(new_data, file_name):
+
+    all_data = get_boards(force=True)
+
+    with open(file_name, 'w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, delimiter=',', quotechar='"', fieldnames=['id', 'title'])
-        all_data = data_handler.get_boards()
-        for data in all_data:
-            if data.id == board_id:
-                data.title = new_title
-                writer.writerow(data)
+        writer.writeheader()
+
+        for line in all_data:
+
+            if int(line['id']) == int(new_data['id']):
+
+                line['title'] = new_data['title']
+
+            writer.writerow(line)
+
 
 
 def write_board_to_csv(title, file_name):
