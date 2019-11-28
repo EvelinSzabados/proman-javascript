@@ -32,21 +32,25 @@ export let dom = {
                         <div class="board-column">
                             <div class="board-column-title">New</div>
                             <div class="board-column-content">
+                                 
                             </div>
                         </div>
-                        <div class="board-column">
+                        <div class="board-column"> 
                             <div class="board-column-title">In Progress</div>
                             <div class="board-column-content">
+                            
                             </div>
                         </div>
                         <div class="board-column">
                             <div class="board-column-title">Testing</div>
                             <div class="board-column-content">
+                                  
                             </div>
                         </div>
                         <div class="board-column">
                             <div class="board-column-title">Done</div>
                             <div class="board-column-content">
+                            
                             </div>
                         </div>
                     </div>
@@ -58,6 +62,8 @@ export let dom = {
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         const editable = document.getElementById(`board_${new_board_data.id}`);
+        editable.spellcheck = false;
+        //dom.loadCards(new_board_data.id);
 
         editable.addEventListener('keypress', function (e) {
             if (e.code === "Enter") {
@@ -87,38 +93,44 @@ export let dom = {
             <div class="collapse" id="collapseExample${board.id}">
                 <div class="card card-body">
                  <div class="board-columns">
-                        <div class="board-column">
+                        <div class="board-column id="column-${board.id}">
                             <div class="board-column-title">New</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-new-${board.id}">
+                            
                             </div>
                         </div>
-                        <div class="board-column">
+                        <div class="board-column" id="column-${board.id}">
                             <div class="board-column-title">In Progress</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-in-progress-${board.id}">
                             </div>
                         </div>
-                        <div class="board-column">
+                        <div class="board-column" id="column-${board.id}">
                             <div class="board-column-title">Testing</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-testing-${board.id}">
                             </div>
                         </div>
-                        <div class="board-column">
+                        <div class="board-column" id="column-${board.id}">
                             <div class="board-column-title">Done</div>
-                            <div class="board-column-content">
+                            <div class="board-column-content" id="column-done-${board.id}">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
           </section>
+          
         `;
+
         }
+
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
 
         for (let board of boards) {
+            dom.loadCards(board.id);
             const editable = document.getElementById(`board_${board.id}`);
+            editable.spellcheck = false;
             editable.addEventListener('keypress', function (e) {
                 if (e.code === "Enter") {
                     editable.contentEditable = "false";
@@ -133,12 +145,41 @@ export let dom = {
     showStatuses: function (statuses) {
 
     },
-    loadCards: function (boardId) {
+    loadCards: function (board_id) {
+
+        dataHandler.getCardsByBoardId(board_id,function (boardId) {
+            dom.showCards(board_id,boardId);
+        });
         // retrieves cards and makes showCards called
     },
-    showCards: function (cards) {
+    showCards: function (board_id,cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
+        let columnNew = document.getElementById(`column-new-${board_id}`);
+        let columnInProgress = document.getElementById(`column-in-progress-${board_id}`);
+        let columnTesting = document.getElementById(`column-testing-${board_id}`);
+        let columnDone = document.getElementById(`column-done-${board_id}`);
+
+        for(let card of cards){
+            if(card.board_id === board_id){
+                let new_content = `
+                <div class="Card">
+                      <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                      <div class="card-title">${card.title}</div>
+                </div>`;
+                if(card.status_id == 0){
+                    columnNew.innerHTML += new_content
+                }if(card.status_id == 1){
+                    columnInProgress.innerHTML += new_content
+                }if(card.status_id == 2){
+                    columnTesting.innerHTML += new_content
+                }else{
+                    columnDone.innerHTML += new_content
+                }
+
+
+            }
+        }
     },
     // here comes more features
 };
