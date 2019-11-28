@@ -24,9 +24,9 @@ export let dom = {
          <section class="board">
             <div class="board-header"><span class="board-title" id="board_${new_board_data.id}" contenteditable="true"> ${new_board_data.title}</span>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${new_board_data.id}" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${new_board_data.id}" aria-expanded="true" aria-controls="collapseExample${new_board_data.id}"><i class="fas fa-chevron-down"></i></button>
             </div>
-            <div class="collapse" id="collapseExample${new_board_data.id}">
+            <div class="collapse show" id="collapseExample${new_board_data.id}">
                 <div class="card card-body">
                     <div class="board-columns">
                         <div class="board-column">
@@ -88,9 +88,9 @@ export let dom = {
           <section class="board">
             <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="true"> ${board.title}</span>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle" role="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample${board.id}"><i class="fas fa-chevron-down"></i></button>
             </div>
-            <div class="collapse" id="collapseExample${board.id}">
+            <div class="collapse show" id="collapseExample${board.id}">
                 <div class="card card-body">
                  <div class="board-columns">
                         <div class="board-column id="column-${board.id}">
@@ -122,7 +122,6 @@ export let dom = {
         `;
 
         }
-
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
