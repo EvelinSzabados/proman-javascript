@@ -92,12 +92,12 @@ def clear_cache():
 def get_statuses(force=False):
     return _get_data('statuses', STATUSES_FILE, force)
 
-
 def get_boards(force=False):
     return _get_data('boards', BOARDS_FILE, force)
 
+
 def get_cards(force=False):
-    return _get_data('cards', CARDS_FILE, force)
+    cards = _get_data('cards', CARDS_FILE, force)
     for card in cards:
         set_card_types(card)
     return cards
