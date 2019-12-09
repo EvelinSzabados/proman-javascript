@@ -1,4 +1,5 @@
 import csv, data_handler
+import os
 
 STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
@@ -95,6 +96,11 @@ def get_statuses(force=False):
 def get_boards(force=False):
     return _get_data('boards', BOARDS_FILE, force)
 
-
 def get_cards(force=False):
     return _get_data('cards', CARDS_FILE, force)
+    for card in cards:
+        set_card_types(card)
+    return cards
+
+def set_card_types(card):
+    card['board_id'] = int(card['board_id'])
