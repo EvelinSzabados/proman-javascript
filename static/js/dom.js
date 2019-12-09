@@ -20,6 +20,9 @@ export let dom = {
         const clone = document.importNode(template.content, true);
 
         //get elements of template and set attributes
+        const section =clone.querySelector('.board');
+        section.setAttribute('id', `section_board_${board_data.id}`);
+
         let editable = clone.querySelector('.board-title');
         editable.textContent = board_data.title;
         editable.setAttribute('id', `board_${board_data.id}`);
@@ -30,8 +33,6 @@ export let dom = {
         toggle.setAttribute('aria-controls', `collapseExample${board_data.id}`);
         const collapse = clone.querySelector('.collapse');
         collapse.setAttribute('id', `collapseExample${board_data.id}`);
-        const columnTitle = clone.querySelector('.board-column-title');
-        columnTitle.setAttribute('id', `column-${board_data.id}`);
 
         //add new template elements to html (main board section in index.html)
 
@@ -52,6 +53,7 @@ export let dom = {
     showNewBoard: function (board) {
 
         dom.templateBoards(board);
+        dom.loadCards(board.id)
 
     },
     showBoards: function (boards) {
@@ -61,6 +63,8 @@ export let dom = {
         for (let board of boards) {
 
             dom.templateBoards(board);
+            dom.loadCards(board.id)
+
 
         }
 
@@ -77,45 +81,46 @@ export let dom = {
         // retrieves cards and makes showCards called
     },
     showCards: function (board_id, cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-        // let columnNew = document.getElementById(`column-new-${board_id}`);
-        // let columnInProgress = document.getElementById(`column-in-progress-${board_id}`);
-        // let columnTesting = document.getElementById(`column-testing-${board_id}`);
-        // let columnDone = document.getElementById(`column-done-${board_id}`);
-        const template = document.querySelector('#card-template');
-        const clone = document.importNode(template.content, true);
-        const columnNew = clone.querySelector('#column-new');
-        const columnProgress = clone.querySelector('#column-in-progress');
-        const columnTest = clone.querySelector('#column-testing');
-        const columnDone = clone.querySelector('#column-done');
 
+        const templateCard = document.querySelector('#card-template');
+        const cloneCard = document.importNode(templateCard.content, true);
+
+        const templateColumn = document.querySelector('#column-template');
+        const cloneColumn = document.importNode(templateColumn.content, true);
+
+        const columnNew = cloneColumn.querySelector('#column-new');
+        const columnProgress = cloneColumn.querySelector('#column-in-progress');
+        const columnTest = cloneColumn.querySelector('#column-testing');
+        const columnDone = cloneColumn.querySelector('#column-done');
+        const cardTitle = cloneCard.querySelector('.card-title');
 
         for (let card of cards) {
             if (card.board_id === board_id) {
-                // let new_content = `
-                // <div class="Card">
-                //       <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                //       <div class="card-title">${card.title}</div>
-                // </div>`;
-                clone.querySelector('.card-title').textContent = card.title;
+
+                cardTitle.textContent = card.title;
 
                 if (card.status_id == 0) {
-                    columnNew.setAttribute('id', `column-new-${board_id}`)
+                    columnNew.appendChild(cloneCard)
                 }
                 if (card.status_id == 1) {
-                    columnProgress.setAttribute('id', `column-in-progress-${board_id}`)
+                    columnProgress.appendChild(cloneCard)
                 }
                 if (card.status_id == 2) {
-                    columnTest.setAttribute('id', `column-testing-${board_id}`)
+                    columnTest.appendChild(cloneCard)
                 }
                 if (card.status_id == 3) {
-                    columnDone.setAttribute('id', `column-done-${board_id}`)
+                    columnDone.appendChild(cloneCard)
                 }
-                document.querySelector('#container').appendChild(cardElement);
+                cloneColumn.appendChild(cloneCard)
+
 
             }
+
         }
+        const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
+        boardColumns.appendChild(cloneColumn)
+
+
     },
-    // here comes more features
+
 };
