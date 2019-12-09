@@ -97,4 +97,10 @@ def get_boards(force=False):
 
 
 def get_cards(force=False):
-    return _get_data('cards', CARDS_FILE, force)
+    cards = _get_data('cards', CARDS_FILE, force)
+    for card in cards:
+        set_card_types(card)
+    return cards
+
+def set_card_types(card):
+    card['board_id'] = int(card['board_id'])
