@@ -37,7 +37,6 @@ def add_id_to_new_board(file_name):
 
 
 def modify_board_title(new_data, file_name):
-
     all_data = get_boards(force=True)
 
     with open(file_name, 'w', newline='', encoding='utf-8') as file:
@@ -47,11 +46,9 @@ def modify_board_title(new_data, file_name):
         for line in all_data:
 
             if int(line['id']) == int(new_data['id']):
-
                 line['title'] = new_data['title']
 
             writer.writerow(line)
-
 
 
 def write_board_to_csv(title, file_name):
@@ -101,6 +98,7 @@ def get_cards(force=False):
     for card in cards:
         set_card_types(card)
     return cards
+
 
 def set_card_types(card):
     card['board_id'] = int(card['board_id'])
