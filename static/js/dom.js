@@ -20,7 +20,7 @@ export let dom = {
         const clone = document.importNode(template.content, true);
 
         //get elements of template and set attributes
-        const section =clone.querySelector('.board');
+        const section = clone.querySelector('.board');
         section.setAttribute('id', `section_board_${board_data.id}`);
 
         let editable = clone.querySelector('.board-title');
@@ -46,7 +46,6 @@ export let dom = {
                 editable.contentEditable = "true"; // after saving new title the are will be editable again
             }
         });
-
 
 
     },
@@ -83,7 +82,7 @@ export let dom = {
     showCards: function (board_id, cards) {
 
         const templateCard = document.querySelector('#card-template');
-        const cloneCard = document.importNode(templateCard.content, true);
+
 
         const templateColumn = document.querySelector('#column-template');
         const cloneColumn = document.importNode(templateColumn.content, true);
@@ -92,35 +91,28 @@ export let dom = {
         const columnProgress = cloneColumn.querySelector('#column-in-progress');
         const columnTest = cloneColumn.querySelector('#column-testing');
         const columnDone = cloneColumn.querySelector('#column-done');
-        const cardTitle = cloneCard.querySelector('.card-title');
 
+
+        const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
         for (let card of cards) {
-            if (card.board_id === board_id) {
-
+            const cloneCard = document.importNode(templateCard.content, true);
+            const cardTitle = cloneCard.querySelector('.card-title');
+            if (card.board_id === parseInt(board_id)) {
                 cardTitle.textContent = card.title;
-
-                if (card.status_id == 0) {
-                    columnNew.appendChild(cloneCard)
+                if (parseInt(card.status_id) === 0) {
+                    columnNew.appendChild(cloneCard);
                 }
-                if (card.status_id == 1) {
+                if (parseInt(card.status_id) === 1) {
                     columnProgress.appendChild(cloneCard)
                 }
-                if (card.status_id == 2) {
+                if (parseInt(card.status_id) === 2) {
                     columnTest.appendChild(cloneCard)
                 }
-                if (card.status_id == 3) {
+                if (parseInt(card.status_id) === 3) {
                     columnDone.appendChild(cloneCard)
                 }
-                cloneColumn.appendChild(cloneCard)
-
-
             }
-
         }
-        const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
-        boardColumns.appendChild(cloneColumn)
-
-
+        boardColumns.appendChild(cloneColumn);
     },
-
 };
