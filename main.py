@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify
 from util import json_response
+import queries
 
 import data_handler, persistence
 
@@ -20,7 +21,7 @@ def get_boards():
     """
     All the boards
     """
-    return data_handler.get_boards()
+    return queries.get_boards()
 
 
 @app.route("/get-statuses", methods=['GET', 'POST'])
@@ -30,9 +31,7 @@ def get_statuses():
     All the statuses
     """
     board_id = request.get_json()
-    caught_board_id = persistence.get_statuses(force=True)
-    print(board_id)
-    print(caught_board_id)
+    caught_board_id = queries.get_statuses()
     return caught_board_id
 
 
