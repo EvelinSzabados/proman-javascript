@@ -14,131 +14,59 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
-    loadStatuses: function () {
-        // retrieves boards and makes showBoards called
+    templateBoards: function (board_data) {
+        // get templates and create clone
+        const template = document.querySelector('#board-template');
+        const clone = document.importNode(template.content, true);
+
+        //get elements of template and set attributes
+        const section = clone.querySelector('.board');
+        section.setAttribute('id', `section_board_${board_data.id}`);
+
+        let editable = clone.querySelector('.board-title');
+        editable.textContent = board_data.title;
+        editable.setAttribute('id', `board_${board_data.id}`);
+        editable.setAttribute('contenteditable', 'true');
+        editable.spellcheck = false;
+        const toggle = clone.querySelector('.board-toggle');
+        toggle.setAttribute('data-target', `#collapseExample${board_data.id}`);
+        toggle.setAttribute('aria-controls', `collapseExample${board_data.id}`);
+        const collapse = clone.querySelector('.collapse');
+        collapse.setAttribute('id', `collapseExample${board_data.id}`);
+
+        //add new template elements to html (main board section in index.html)
+
+        document.querySelector('#boards').appendChild(clone);
+        // editing title function that saves new title
+        editable.addEventListener('keypress', function (event) {
+            if (event.code === "Enter") {
+                editable.contentEditable = "false"; // if you hit enter, the title are wont be editable
+                let new_title = editable.innerText;
+                dataHandler.renameBoard(new_title, board_data.id, console.log);
+                editable.contentEditable = "true"; // after saving new title the are will be editable again
+            }
+        });
+
 
     },
-    showNewBoard: function (new_board_data) {
-        let outerHtml = '';
-        outerHtml += `
-         <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${new_board_data.id}" contenteditable="true"> ${new_board_data.title}</span>
-                <button class="board-add">Add Card</button>
-                <button class="board-toggle" type="button" data-toggle="collapse" data-target="#collapseExample${new_board_data.id}" aria-expanded="true" aria-controls="collapseExample${new_board_data.id}"><i class="fas fa-chevron-down"></i></button>
-            </div>
-            <div class="collapse show" id="collapseExample${new_board_data.id}">
-                <div class="card card-body">
-                    <div class="board-columns">
-                        <div class="board-column">
-                            <div class="board-column-title">New</div>
-                            <div class="board-column-content">
-                                 
-                            </div>
-                        </div>
-                        <div class="board-column"> 
-                            <div class="board-column-title">In Progress</div>
-                            <div class="board-column-content">
-                            
-                            </div>
-                        </div>
-                        <div class="board-column">
-                            <div class="board-column-title">Testing</div>
-                            <div class="board-column-content">
-                                  
-                            </div>
-                        </div>
-                        <div class="board-column">
-                            <div class="board-column-title">Done</div>
-                            <div class="board-column-content">
-                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </section>
-        `;
+    showNewBoard: function (board) {
 
-        let boardsContainer = document.querySelector('#boards');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-        const editable = document.getElementById(`board_${new_board_data.id}`);
-        editable.spellcheck = false;
-        //dom.loadCards(new_board_data.id);
-
-        editable.addEventListener('keypress', function (e) {
-            if (e.code === "Enter") {
-                editable.contentEditable = "false";
-                let new_title = editable.innerText;
-                dataHandler.renameBoard(new_title, new_board_data.id, console.log);
-                editable.contentEditable = "true";
-            }
-        })
+        dom.templateBoards(board);
+        dom.loadCards(board.id)
 
     },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
-
-        let outerHtml = '';
-
         for (let board of boards) {
 
-            outerHtml += `
-          <section class="board">
-            <div class="board-header"><span class="board-title" id="board_${board.id}" contenteditable="true"> ${board.title}</span>
-                <button class="board-add">Add Card</button>
-                <button class="board-toggle" role="button" data-toggle="collapse" data-target="#collapseExample${board.id}" aria-expanded="true" aria-controls="collapseExample${board.id}"><i class="fas fa-chevron-down"></i></button>
-            </div>
-            <div class="collapse show" id="collapseExample${board.id}">
-                <div class="card card-body">
-                 <div class="board-columns">
-                        <div class="board-column id="column-${board.id}">
-                            <div class="board-column-title">New</div>
-                            <div class="board-column-content" id="column-new-${board.id}">
-                            
-                            </div>
-                        </div>
-                        <div class="board-column" id="column-${board.id}">
-                            <div class="board-column-title">In Progress</div>
-                            <div class="board-column-content" id="column-in-progress-${board.id}">
-                            </div>
-                        </div>
-                        <div class="board-column" id="column-${board.id}">
-                            <div class="board-column-title">Testing</div>
-                            <div class="board-column-content" id="column-testing-${board.id}">
-                            </div>
-                        </div>
-                        <div class="board-column" id="column-${board.id}">
-                            <div class="board-column-title">Done</div>
-                            <div class="board-column-content" id="column-done-${board.id}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </section>
-          
-        `;
+            dom.templateBoards(board);
+            dom.loadCards(board.id)
+
 
         }
 
-        let boardsContainer = document.querySelector('#boards');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-
-        for (let board of boards) {
-            dom.loadCards(board.id);
-            const editable = document.getElementById(`board_${board.id}`);
-            editable.spellcheck = false;
-            editable.addEventListener('keypress', function (e) {
-                if (e.code === "Enter") {
-                    editable.contentEditable = "false";
-                    let new_title = editable.innerText;
-                    dataHandler.renameBoard(new_title, board.id, console.log);
-                    editable.contentEditable = "true";
-                }
-            })
-        }
 
     },
     showStatuses: function (statuses) {
@@ -146,39 +74,45 @@ export let dom = {
     },
     loadCards: function (board_id) {
 
-        dataHandler.getCardsByBoardId(board_id,function (boardId) {
-            dom.showCards(board_id,boardId);
+        dataHandler.getCardsByBoardId(board_id, function (cards) {
+            dom.showCards(board_id, cards);
         });
         // retrieves cards and makes showCards called
     },
-    showCards: function (board_id,cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-        let columnNew = document.getElementById(`column-new-${board_id}`);
-        let columnInProgress = document.getElementById(`column-in-progress-${board_id}`);
-        let columnTesting = document.getElementById(`column-testing-${board_id}`);
-        let columnDone = document.getElementById(`column-done-${board_id}`);
+    showCards: function (board_id, cards) {
 
-        for(let card of cards){
-            if(card.board_id === board_id){
-                let new_content = `
-                <div class="Card">
-                      <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                      <div class="card-title">${card.title}</div>
-                </div>`;
-                if(card.status_id == 0){
-                    columnNew.innerHTML += new_content
-                }if(card.status_id == 1){
-                    columnInProgress.innerHTML += new_content
-                }if(card.status_id == 2){
-                    columnTesting.innerHTML += new_content
-                }if(card.status_id == 3){
-                    columnDone.innerHTML += new_content
+        const templateCard = document.querySelector('#card-template');
+
+
+        const templateColumn = document.querySelector('#column-template');
+        const cloneColumn = document.importNode(templateColumn.content, true);
+
+        const columnNew = cloneColumn.querySelector('#column-new');
+        const columnProgress = cloneColumn.querySelector('#column-in-progress');
+        const columnTest = cloneColumn.querySelector('#column-testing');
+        const columnDone = cloneColumn.querySelector('#column-done');
+
+
+        const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
+        for (let card of cards) {
+            const cloneCard = document.importNode(templateCard.content, true);
+            const cardTitle = cloneCard.querySelector('.card-title');
+            if (card.board_id === parseInt(board_id)) {
+                cardTitle.textContent = card.title;
+                if (parseInt(card.status_id) === 0) {
+                    columnNew.appendChild(cloneCard);
                 }
-
-
+                if (parseInt(card.status_id) === 1) {
+                    columnProgress.appendChild(cloneCard)
+                }
+                if (parseInt(card.status_id) === 2) {
+                    columnTest.appendChild(cloneCard)
+                }
+                if (parseInt(card.status_id) === 3) {
+                    columnDone.appendChild(cloneCard)
+                }
             }
         }
+        boardColumns.appendChild(cloneColumn);
     },
-    // here comes more features
 };
