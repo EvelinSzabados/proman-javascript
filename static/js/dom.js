@@ -51,8 +51,8 @@ export let dom = {
     },
     showNewBoard: function (board) {
 
-        dom.templateBoards(board);
-        dom.loadCards(board.id)
+        dom.templateBoards(board[0]);
+        dom.loadCards(board[0].id)
 
     },
     showBoards: function (boards) {
