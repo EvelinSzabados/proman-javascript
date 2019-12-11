@@ -23,6 +23,11 @@ export let dom = {
         const section = clone.querySelector('.board');
         section.setAttribute('id', `section_board_${board_data.id}`);
 
+        const new_card_btn = clone.querySelector('.board-add');
+        new_card_btn.addEventListener('click', function () {
+            dataHandler.createNewCard(board_data.id, dom.load_new_card)
+        })
+
         let editable = clone.querySelector('.board-title');
         editable.textContent = board_data.title;
         editable.setAttribute('id', `board_${board_data.id}`);
@@ -72,6 +77,7 @@ export let dom = {
     showStatuses: function (statuses) {
 
     },
+
     loadCards: function (board_id) {
 
         dataHandler.getCardsByBoardId(board_id, function (cards) {
@@ -115,4 +121,40 @@ export let dom = {
         }
         boardColumns.appendChild(cloneColumn);
     },
+    load_new_card: function (data) {
+        dataHandler.getCardsByBoardId(data.boardId, function (cards) {
+            dom.showNewCard(data, cards);
+        });
+    },
+    showNewCard: function (data, cards) {
+        console.log(data, cards);
+        const boardColumns = document.querySelector(`#section_board_${data.boardId} .board-columns`);
+        const columnNew = boardColumns.querySelector('#column-new');
+        const columnProgress = boardColumns.querySelector('#column-in-progress');
+        const columnTest = boardColumns.querySelector('#column-testing');
+        const columnDone = boardColumns.querySelector('#column-done');
+        const templateCard = document.querySelector('#card-template');
+
+
+        for (let card of cards) {
+            const cloneCard = document.importNode(templateCard.content, true);
+            const cardTitle = cloneCard.querySelector('.card-title');
+            if (card.board_id === data.boardId && card.id === data.cardId) {
+                cardTitle.textContent = card.title;
+                if (parseInt(card.status_id) === 0) {
+                    columnNew.appendChild(cloneCard);
+                }
+                if (parseInt(card.status_id) === 1) {
+                    columnProgress.appendChild(cloneCard)
+                }
+                if (parseInt(card.status_id) === 2) {
+                    columnTest.appendChild(cloneCard)
+                }
+                if (parseInt(card.status_id) === 3) {
+                    columnDone.appendChild(cloneCard)
+                }
+            }
+        }
+    }
+
 };

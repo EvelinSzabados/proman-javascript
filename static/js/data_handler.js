@@ -96,9 +96,12 @@ export let dataHandler = {
             callback(response);
         });
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (boardId, callback) {
         // creates new card, saves it and calls the callback function with its data
-    },
+        this._api_post('/new-card', boardId, (response) => {
+            this._data = response;
+            callback(response);
+    })},
     renameBoard: function(newTitle,boardId,callback){
         let new_header = {"id": boardId, "title": newTitle};
         this._api_post('/new-board-title', new_header, (response) => {

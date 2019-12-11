@@ -21,3 +21,11 @@ def update_title(new_title, board_id):
 
 def get_cards_by_board_id(board_id):
     return connection.execute_select(''' SELECT * FROM cards WHERE board_id = %(board_id)s''', {'board_id': board_id})
+
+
+def create_new_card(board_id):
+    return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,
+                                    ( SELECT array_to_string(ARRAY(SELECT chr((97 + round(random() * 25)) :: integer)
+                                    FROM generate_series(1,7)), '')),0, 0)
+                                    RETURNING id''',
+                                     {'board_id': board_id})

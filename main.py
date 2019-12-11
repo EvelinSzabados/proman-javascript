@@ -46,6 +46,14 @@ def new_board():
     return new_board_data
 
 
+@app.route("/new-card", methods=['GET', 'POST'])
+@json_response
+def new_card():
+    board_id = request.get_json()
+    new_card_id = queries.create_new_card(board_id)
+    return {'boardId': board_id, 'cardId': new_card_id[0]['id']}
+
+
 @app.route("/new-board-title", methods=['POST'])
 @json_response
 def new_board_title():
