@@ -21,3 +21,8 @@ def update_title(new_title, board_id):
 
 def get_cards_by_board_id(board_id):
     return connection.execute_select(''' SELECT * FROM cards WHERE board_id = %(board_id)s''', {'board_id': board_id})
+
+
+def modify_card_status_by_card_title(card_title, status_id):
+    return connection.execute_select('''UPDATE cards SET status_id = %(status_id)s WHERE title = %(card_title)s''',
+                                     {'status_id': status_id, 'card_title': card_title})

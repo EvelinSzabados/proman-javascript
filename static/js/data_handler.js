@@ -61,12 +61,12 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getStatuses: function (columnId, callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
-        // this._api_get('/get-statuses',columnId,  (response) => {
-        //     this._data = response;
-        //     callback(response);
-        // });
+    changeStatuses: function (columnId,card_title, callback) {
+        let status_data = {'column_id': columnId, 'card_title': card_title};
+        this._api_post('/change_status', status_data, (response) => {
+            this._data = response;
+            callback(response);
+        });
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status

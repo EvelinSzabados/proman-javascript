@@ -101,7 +101,7 @@ export let dom = {
         dragula([columnNew, columnProgress, columnTest, columnDone]).on('drop', function (el,container) {
             let draggedTitle = el.innerText;
             let column_id = container.id;
-            
+            dataHandler.changeStatuses(column_id,draggedTitle,console.log)
   });
 
 
