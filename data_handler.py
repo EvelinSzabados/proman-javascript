@@ -29,7 +29,7 @@ def get_cards_for_board(board_id):
         if int(card['board_id']) == int(board_id):
             print(board_id)
             matching_cards.append(card)
-    print(matching_cards)
+
     return matching_cards
 
 
