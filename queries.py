@@ -19,5 +19,13 @@ def update_title(new_title, board_id):
                                      'WHERE id= %(board_id)s', {'new_title': new_title, 'board_id': board_id})
 
 
+def create_user(new_data):
+    return connection.execute_select('INSERT INTO registration VALUES (DEFAULT, %(username)s,%(password)s) RETURNING id', {'username': new_data["username"],'password': new_data["password"]})
+
+
+def check_username():
+    return connection.execute_select(''' SELECT username FROM registration''')
+
+
 def get_cards_by_board_id(board_id):
     return connection.execute_select(''' SELECT * FROM cards WHERE board_id = %(board_id)s''', {'board_id': board_id})

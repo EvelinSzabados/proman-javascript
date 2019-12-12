@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify, json
 from util import json_response
+import bcrypt
 
 import data_handler, persistence, queries
 
@@ -70,6 +71,28 @@ def create_new_status():
     persistence.write_board_to_csv(new_statuses, 'data/statuses.csv')
     return new_statuses
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    message = "false"
+    if request.method == 'POST':
+        username = request.form.get('username')
+        existing_user_names = queries.check_username()
+
+        for user in existing_user_names:
+            if user['username'] == username:
+                return render_template('register.html', message="false")
+            else:
+                message = "true"
+        hashed_bytes = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
+        register_data = {
+            'username': username,
+            'password': hashed_bytes.decode('utf-8')
+        }
+
+        queries.create_user(register_data)
+        return render_template('register.html', message=message)
+
+    return render_template('register.html', message="none")
 
 def main():
     app.run(debug=True)
