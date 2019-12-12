@@ -83,7 +83,11 @@ def execute_select(statement, variables=None):
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
-            result_set = cursor.fetchall()
+            try:
+                result_set = cursor.fetchall()
+            except psycopg2.ProgrammingError as pe:
+                pass
+
     return result_set
 
 

@@ -23,6 +23,16 @@ export let dom = {
         //get elements of template and set attributes
         const section = clone.querySelector('.board');
         section.setAttribute('id', `section_board_${board_data.id}`);
+        const delete_board = clone.querySelector('.board-delete');
+        delete_board.addEventListener('click', function () {
+            let result = confirm("Want to delete?");
+            if (result) {
+                section.remove();
+                dataHandler.deleteBoard(board_data.id, console.log)
+            }
+
+        });
+
 
         const new_card_btn = clone.querySelector('.board-add');
         new_card_btn.addEventListener('click', function () {
@@ -69,22 +79,7 @@ export let dom = {
 
             dom.templateBoards(board);
             dom.loadCards(board.id);
-
-
         }
-
-
-    },
-    getStatuses: function () {
-        // const columnNew = document.querySelector('#column-new');
-        // const columnProgress = document.querySelector('#column-in-progress');
-        // const columnTest = document.querySelector('#column-testing');
-        // const columnDone = document.querySelector('#column-done');
-        // dragula([columnNew, columnProgress, columnTest, columnDone])
-        //     .on('drop', function (el) {
-        //         console.log('hello');
-        //     })
-
     },
 
     loadCards: function (board_id) {
@@ -118,6 +113,22 @@ export let dom = {
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
             cardTitle.textContent = card.title;
+            cardTitle.setAttribute('id', `board_${card.id}`);
+            cardTitle.setAttribute('contenteditable', 'true');
+            cardTitle.spellcheck = false;
+
+
+            const delete_card = cloneCard.querySelector('.card-remove');
+            delete_card.addEventListener('click', function () {
+                let result = confirm("Want to delete?");
+                if (result) {
+                    cardContainer.remove();
+                    dataHandler.deleteCard(card.id, console.log)
+                }
+
+            });
+
+
             if (parseInt(card.status_id) === 0) {
                 columnNew.appendChild(cloneCard);
             }
@@ -130,10 +141,18 @@ export let dom = {
             if (parseInt(card.status_id) === 3) {
                 columnDone.appendChild(cloneCard)
             }
+            cardTitle.addEventListener('keypress', function (event) {
+                if (event.code === "Enter") {
+                    cardTitle.contentEditable = "false"; // if you hit enter, the title are wont be editable
+                    let new_title = cardTitle.innerText;
+                    dataHandler.renameCard(new_title, card.id, console.log);
+                    cardTitle.contentEditable = "true"; // after saving new title the are will be editable again
+                }
+            })
         }
 
         boardColumns.appendChild(cloneColumn);
-        dom.getStatuses();
+        // dom.getStatuses();
 
     },
     load_new_card: function (data) {
@@ -142,7 +161,7 @@ export let dom = {
         });
     },
     showNewCard: function (data, cards) {
-        console.log(data, cards);
+
         const boardColumns = document.querySelector(`#section_board_${data.boardId} .board-columns`);
         const columnNew = boardColumns.querySelector('#column-new');
         const columnProgress = boardColumns.querySelector('#column-in-progress');
@@ -154,10 +173,26 @@ export let dom = {
         for (let card of cards) {
             const cloneCard = document.importNode(templateCard.content, true);
             const cardTitle = cloneCard.querySelector('.card-title');
+            cardTitle.setAttribute('id', `board_${card.id}`);
+            cardTitle.setAttribute('contenteditable', 'true');
+            cardTitle.spellcheck = false;
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
+
+            const delete_card = cloneCard.querySelector('.card-remove');
+            delete_card.addEventListener('click', function () {
+                let result = confirm("Want to delete?");
+                if (result){
+                    cardContainer.remove();
+                    dataHandler.deleteCard(card.id, console.log)
+
+                }
+            });
+
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
+                cardContainer.setAttribute('id', `${card.id}`);
+
                 if (parseInt(card.status_id) === 0) {
                     columnNew.appendChild(cloneCard);
                 }
@@ -171,7 +206,15 @@ export let dom = {
                     columnDone.appendChild(cloneCard)
                 }
             }
+            cardTitle.addEventListener('keypress', function (event) {
+                if (event.code === "Enter") {
+                    cardTitle.contentEditable = "false"; // if you hit enter, the title are wont be editable
+                    let new_title = cardTitle.innerText;
+                    dataHandler.renameCard(new_title, card.id, console.log);
+                    cardTitle.contentEditable = "true"; // after saving new title the are will be editable again
+                }
+            })
         }
-    }
+    },
 
 };
