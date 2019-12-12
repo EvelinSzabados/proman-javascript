@@ -61,12 +61,12 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getStatuses: function (columnId, callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
-         this._api_get('/get-statuses',columnId,  (response) => {
-             this._data = response;
-             callback(response);
-         });
+    changeStatuses: function (columnId,card_id, callback) {
+        let status_data = {'column_id': columnId, 'card_id': card_id};
+        this._api_post('/change_status', status_data, (response) => {
+            this._data = response;
+            callback(response);
+        });
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
@@ -96,9 +96,12 @@ export let dataHandler = {
             callback(response);
         });
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (boardId, callback) {
         // creates new card, saves it and calls the callback function with its data
-    },
+        this._api_post('/new-card', boardId, (response) => {
+            this._data = response;
+            callback(response);
+    })},
     renameBoard: function(newTitle,boardId,callback){
         let new_header = {"id": boardId, "title": newTitle};
         this._api_post('/new-board-title', new_header, (response) => {

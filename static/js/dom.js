@@ -13,6 +13,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
+
     },
     templateBoards: function (board_data) {
         // get templates and create clone
@@ -22,6 +23,11 @@ export let dom = {
         //get elements of template and set attributes
         const section = clone.querySelector('.board');
         section.setAttribute('id', `section_board_${board_data.id}`);
+
+        const new_card_btn = clone.querySelector('.board-add');
+        new_card_btn.addEventListener('click', function () {
+            dataHandler.createNewCard(board_data.id, dom.load_new_card)
+        });
 
         let editable = clone.querySelector('.board-title');
         editable.textContent = board_data.title;
@@ -62,16 +68,25 @@ export let dom = {
         for (let board of boards) {
 
             dom.templateBoards(board);
-            dom.loadCards(board.id)
+            dom.loadCards(board.id);
 
 
         }
 
 
     },
-    showStatuses: function (statuses) {
+    getStatuses: function () {
+        // const columnNew = document.querySelector('#column-new');
+        // const columnProgress = document.querySelector('#column-in-progress');
+        // const columnTest = document.querySelector('#column-testing');
+        // const columnDone = document.querySelector('#column-done');
+        // dragula([columnNew, columnProgress, columnTest, columnDone])
+        //     .on('drop', function (el) {
+        //         console.log('hello');
+        //     })
 
     },
+
     loadCards: function (board_id) {
 
         dataHandler.getCardsByBoardId(board_id, function (cards) {
@@ -82,8 +97,6 @@ export let dom = {
     showCards: function (board_id, cards) {
 
         const templateCard = document.querySelector('#card-template');
-
-
         const templateColumn = document.querySelector('#column-template');
         const cloneColumn = document.importNode(templateColumn.content, true);
 
@@ -91,13 +104,59 @@ export let dom = {
         const columnProgress = cloneColumn.querySelector('#column-in-progress');
         const columnTest = cloneColumn.querySelector('#column-testing');
         const columnDone = cloneColumn.querySelector('#column-done');
+        dragula([columnNew, columnProgress, columnTest, columnDone]).on('drop', function (el, container) {
+            let draggedId = el.id;
+            let column_id = container.id;
+            dataHandler.changeStatuses(column_id, draggedId, console.log)
+        });
 
 
         const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
         for (let card of cards) {
             const cloneCard = document.importNode(templateCard.content, true);
             const cardTitle = cloneCard.querySelector('.card-title');
-            if (card.board_id === parseInt(board_id)) {
+            const cardContainer = cloneCard.querySelector('.Card');
+            cardContainer.setAttribute('id', `${card.id}`);
+            cardTitle.textContent = card.title;
+            if (parseInt(card.status_id) === 0) {
+                columnNew.appendChild(cloneCard);
+            }
+            if (parseInt(card.status_id) === 1) {
+                columnProgress.appendChild(cloneCard)
+            }
+            if (parseInt(card.status_id) === 2) {
+                columnTest.appendChild(cloneCard)
+            }
+            if (parseInt(card.status_id) === 3) {
+                columnDone.appendChild(cloneCard)
+            }
+        }
+
+        boardColumns.appendChild(cloneColumn);
+        dom.getStatuses();
+
+    },
+    load_new_card: function (data) {
+        dataHandler.getCardsByBoardId(data.boardId, function (cards) {
+            dom.showNewCard(data, cards);
+        });
+    },
+    showNewCard: function (data, cards) {
+        console.log(data, cards);
+        const boardColumns = document.querySelector(`#section_board_${data.boardId} .board-columns`);
+        const columnNew = boardColumns.querySelector('#column-new');
+        const columnProgress = boardColumns.querySelector('#column-in-progress');
+        const columnTest = boardColumns.querySelector('#column-testing');
+        const columnDone = boardColumns.querySelector('#column-done');
+        const templateCard = document.querySelector('#card-template');
+
+
+        for (let card of cards) {
+            const cloneCard = document.importNode(templateCard.content, true);
+            const cardTitle = cloneCard.querySelector('.card-title');
+            const cardContainer = cloneCard.querySelector('.Card');
+            cardContainer.setAttribute('id', `${card.id}`);
+            if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
                 if (parseInt(card.status_id) === 0) {
                     columnNew.appendChild(cloneCard);
@@ -113,6 +172,6 @@ export let dom = {
                 }
             }
         }
-        boardColumns.appendChild(cloneColumn);
-    },
+    }
+
 };

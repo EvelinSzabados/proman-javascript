@@ -21,3 +21,14 @@ def update_title(new_title, board_id):
 
 def get_cards_by_board_id(board_id):
     return connection.execute_select(''' SELECT * FROM cards WHERE board_id = %(board_id)s''', {'board_id': board_id})
+
+
+def modify_card_status_by_card_title(card_id, status_id):
+    return connection.execute_select('''UPDATE cards SET status_id = %(status_id)s WHERE id = %(card_id)s''',
+                                     {'status_id': status_id, 'card_id': card_id})
+
+
+def create_new_card(board_id):
+    return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,'Sample card',0, 0)
+                                    RETURNING id''',
+                                     {'board_id': board_id})
