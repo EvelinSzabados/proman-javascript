@@ -208,6 +208,10 @@ section.board {
     padding: 4px;
 }
 
+.Card:hover{
+    cursor: pointer;
+}
+
 .board-column:nth-of-type(1) .Card {
     background: var(--status-1);
 }
