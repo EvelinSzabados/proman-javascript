@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reg_style.css') }}">
+</head>
+<body>
+<div class="container-box">
+<div class="container">
+
+    {% if message == 'true' %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+              Successful registration!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+
+    {% elif message == 'false' %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              This username is already taken!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+    {% else %}
+            <p></p>
+   {% endif %}
+
+    <form action="/register", method="post">
+        <h1>Registration</h1>
+        <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required minlength="5" autocomplete="off">
+
+         </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="5" autocomplete="off">
+      </div>
+        <button type="submit" class="btn btn-primary">Register</button> <a href="/"><button type="button" class="btn btn-primary">Back to main page</button></a>
+</form>
+</div>
+</div>
+
+
+</body>
+</html>
