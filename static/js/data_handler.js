@@ -17,7 +17,7 @@ export let dataHandler = {
             .then(response => response.json())  // parse the response as JSON
             .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
-    _get_api_card: function(url,data,callback){
+    _get_api_card: function (url, data, callback) {
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -61,7 +61,7 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    changeStatuses: function (columnId,card_id, callback) {
+    changeStatuses: function (columnId, card_id, callback) {
         let status_data = {'column_id': columnId, 'card_id': card_id};
         this._api_post('/change_status', status_data, (response) => {
             this._data = response;
@@ -73,7 +73,7 @@ export let dataHandler = {
     },
     getCardsByBoardId: function (board_id, callback) {
 
-        this._api_get(`get-cards/${board_id}` ,(response) => {
+        this._api_get(`get-cards/${board_id}`, (response) => {
             this._data = response;
             callback(response);
         });
@@ -101,13 +101,20 @@ export let dataHandler = {
         this._api_post('/new-card', boardId, (response) => {
             this._data = response;
             callback(response);
-    })},
-    renameBoard: function(newTitle,boardId,callback){
+        })
+    },
+    renameBoard: function (newTitle, boardId, callback) {
         let new_header = {"id": boardId, "title": newTitle};
         this._api_post('/new-board-title', new_header, (response) => {
             this._data = response;
             callback(response);
         });
+    },
+    deleteCard: function (card_id, callback) {
+        this._api_post('/delete-card', card_id, (response) => {
+            this._data = response;
+            callback(response);
+        })
     }
     // here comes more features
 };

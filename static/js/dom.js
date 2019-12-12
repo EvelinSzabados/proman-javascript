@@ -118,6 +118,14 @@ export let dom = {
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
             cardTitle.textContent = card.title;
+
+            const delete_card =cloneCard.querySelector('.card-remove')
+            delete_card.addEventListener('click', function(){
+                cardContainer.remove()
+                dataHandler.deleteCard(card.id, console.log)
+            })
+
+
             if (parseInt(card.status_id) === 0) {
                 columnNew.appendChild(cloneCard);
             }

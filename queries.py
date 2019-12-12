@@ -32,3 +32,9 @@ def create_new_card(board_id):
     return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,'Sample card',0, 0)
                                     RETURNING id''',
                                      {'board_id': board_id})
+
+
+def delete_card(card_id):
+    return connection.execute_select('''DELETE FROM cards 
+                                        WHERE cards.id = %(card_id)s''',
+                                     {'card_id': card_id})
