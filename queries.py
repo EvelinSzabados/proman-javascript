@@ -29,8 +29,6 @@ def modify_card_status_by_card_title(card_id, status_id):
 
 
 def create_new_card(board_id):
-    return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,
-                                    ( SELECT array_to_string(ARRAY(SELECT chr((97 + round(random() * 25)) :: integer)
-                                    FROM generate_series(1,7)), '')),0, 0)
+    return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,'Sample card',0, 0)
                                     RETURNING id''',
                                      {'board_id': board_id})
