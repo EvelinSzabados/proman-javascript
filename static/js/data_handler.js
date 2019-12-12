@@ -108,6 +108,14 @@ export let dataHandler = {
             this._data = response;
             callback(response);
         });
-    }
+    },
+    renameCard: function(newTitle,cardId,callback){
+        let new_header = {"id": cardId, "title": newTitle};
+        this._api_post('/new-card-title', new_header, (response) => {
+            this._data = response;
+            callback(response);
+        });
+    },
+
     // here comes more features
 };

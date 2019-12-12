@@ -118,6 +118,10 @@ export let dom = {
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
             cardTitle.textContent = card.title;
+            cardTitle.setAttribute('id', `board_${card.id}`);
+            cardTitle.setAttribute('contenteditable', 'true');
+            cardTitle.spellcheck = false;
+
             if (parseInt(card.status_id) === 0) {
                 columnNew.appendChild(cloneCard);
             }
@@ -130,10 +134,19 @@ export let dom = {
             if (parseInt(card.status_id) === 3) {
                 columnDone.appendChild(cloneCard)
             }
+            cardTitle.addEventListener('keypress', function (event) {
+                if (event.code === "Enter") {
+                    cardTitle.contentEditable = "false"; // if you hit enter, the title are wont be editable
+                    let new_title = cardTitle.innerText;
+                    dataHandler.renameCard(new_title, card.id, console.log);
+                    cardTitle.contentEditable = "true"; // after saving new title the are will be editable again
+                }
+            })
         }
 
         boardColumns.appendChild(cloneColumn);
         dom.getStatuses();
+
 
     },
     load_new_card: function (data) {
@@ -142,7 +155,7 @@ export let dom = {
         });
     },
     showNewCard: function (data, cards) {
-        console.log(data, cards);
+
         const boardColumns = document.querySelector(`#section_board_${data.boardId} .board-columns`);
         const columnNew = boardColumns.querySelector('#column-new');
         const columnProgress = boardColumns.querySelector('#column-in-progress');
@@ -154,10 +167,15 @@ export let dom = {
         for (let card of cards) {
             const cloneCard = document.importNode(templateCard.content, true);
             const cardTitle = cloneCard.querySelector('.card-title');
+            cardTitle.setAttribute('id', `board_${card.id}`);
+            cardTitle.setAttribute('contenteditable', 'true');
+            cardTitle.spellcheck = false;
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
+                cardContainer.setAttribute('id', `${card.id}`);
+
                 if (parseInt(card.status_id) === 0) {
                     columnNew.appendChild(cloneCard);
                 }
@@ -171,7 +189,15 @@ export let dom = {
                     columnDone.appendChild(cloneCard)
                 }
             }
+            cardTitle.addEventListener('keypress', function (event) {
+                if (event.code === "Enter") {
+                    cardTitle.contentEditable = "false"; // if you hit enter, the title are wont be editable
+                    let new_title = cardTitle.innerText;
+                    dataHandler.renameCard(new_title, card.id, console.log);
+                    cardTitle.contentEditable = "true"; // after saving new title the are will be editable again
+                }
+            })
         }
-    }
+    },
 
 };

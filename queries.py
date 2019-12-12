@@ -32,3 +32,8 @@ def create_new_card(board_id):
     return connection.execute_select('''INSERT INTO cards VALUES (DEFAULT, %(board_id)s,'Sample card',0, 0)
                                     RETURNING id''',
                                      {'board_id': board_id})
+
+
+def update_card_title(new_title, card_id):
+    return connection.execute_select('UPDATE cards SET title = %(new_title)s'
+                                     'WHERE id= %(card_id)s', {'new_title': new_title, 'card_id': card_id})

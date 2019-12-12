@@ -90,6 +90,17 @@ def change_status():
     queries.modify_card_status_by_card_title(card_id, status_id)
 
 
+@app.route('/new-card-title', methods=['POST'])
+def new_card_title():
+    new_data = request.get_json()
+    print(new_data)
+    new_title = new_data['title']
+    card_id = new_data['id']
+    returned_card_id = queries.update_card_title(new_title, card_id)
+    new_card_data = queries.get_cards_by_board_id(returned_card_id[0]['id'])
+    return new_card_data
+
+
 def main():
     app.run(debug=True)
 
