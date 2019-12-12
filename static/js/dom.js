@@ -164,6 +164,13 @@ export let dom = {
             const cardTitle = cloneCard.querySelector('.card-title');
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
+
+            const delete_card =cloneCard.querySelector('.card-remove')
+            delete_card.addEventListener('click', function(){
+                cardContainer.remove()
+                dataHandler.deleteCard(card.id, console.log)
+            })
+
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
                 if (parseInt(card.status_id) === 0) {
