@@ -77,7 +77,7 @@ def change_status():
     new_status_data = request.get_json()
 
     column_id = new_status_data['column_id']
-    card_title = new_status_data['card_title']
+    card_id = new_status_data['card_id']
 
     if column_id == 'column-in-progress':
         status_id = 1
@@ -87,7 +87,7 @@ def change_status():
         status_id = 3
     else:
         status_id = 0
-    queries.modify_card_status_by_card_title(card_title, status_id)
+    queries.modify_card_status_by_card_title(card_id, status_id)
 
 
 def main():

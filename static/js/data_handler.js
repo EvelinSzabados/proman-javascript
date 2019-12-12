@@ -61,8 +61,8 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    changeStatuses: function (columnId,card_title, callback) {
-        let status_data = {'column_id': columnId, 'card_title': card_title};
+    changeStatuses: function (columnId,card_id, callback) {
+        let status_data = {'column_id': columnId, 'card_id': card_id};
         this._api_post('/change_status', status_data, (response) => {
             this._data = response;
             callback(response);

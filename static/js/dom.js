@@ -27,7 +27,7 @@ export let dom = {
         const new_card_btn = clone.querySelector('.board-add');
         new_card_btn.addEventListener('click', function () {
             dataHandler.createNewCard(board_data.id, dom.load_new_card)
-        })
+        });
 
         let editable = clone.querySelector('.board-title');
         editable.textContent = board_data.title;
@@ -104,33 +104,34 @@ export let dom = {
         const columnProgress = cloneColumn.querySelector('#column-in-progress');
         const columnTest = cloneColumn.querySelector('#column-testing');
         const columnDone = cloneColumn.querySelector('#column-done');
-        dragula([columnNew, columnProgress, columnTest, columnDone]).on('drop', function (el,container) {
-            let draggedTitle = el.innerText;
+        dragula([columnNew, columnProgress, columnTest, columnDone]).on('drop', function (el, container) {
+            let draggedId = el.id;
             let column_id = container.id;
-            dataHandler.changeStatuses(column_id,draggedTitle,console.log)
-  });
+            dataHandler.changeStatuses(column_id, draggedId, console.log)
+        });
 
 
         const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
         for (let card of cards) {
             const cloneCard = document.importNode(templateCard.content, true);
             const cardTitle = cloneCard.querySelector('.card-title');
-            if (card.board_id === parseInt(board_id)) {
-                cardTitle.textContent = card.title;
-                if (parseInt(card.status_id) === 0) {
-                    columnNew.appendChild(cloneCard);
-                }
-                if (parseInt(card.status_id) === 1) {
-                    columnProgress.appendChild(cloneCard)
-                }
-                if (parseInt(card.status_id) === 2) {
-                    columnTest.appendChild(cloneCard)
-                }
-                if (parseInt(card.status_id) === 3) {
-                    columnDone.appendChild(cloneCard)
-                }
+            const cardContainer = cloneCard.querySelector('.Card');
+            cardContainer.setAttribute('id', `${card.id}`);
+            cardTitle.textContent = card.title;
+            if (parseInt(card.status_id) === 0) {
+                columnNew.appendChild(cloneCard);
+            }
+            if (parseInt(card.status_id) === 1) {
+                columnProgress.appendChild(cloneCard)
+            }
+            if (parseInt(card.status_id) === 2) {
+                columnTest.appendChild(cloneCard)
+            }
+            if (parseInt(card.status_id) === 3) {
+                columnDone.appendChild(cloneCard)
             }
         }
+
         boardColumns.appendChild(cloneColumn);
         dom.getStatuses();
 
@@ -153,6 +154,8 @@ export let dom = {
         for (let card of cards) {
             const cloneCard = document.importNode(templateCard.content, true);
             const cardTitle = cloneCard.querySelector('.card-title');
+            const cardContainer = cloneCard.querySelector('.Card');
+            cardContainer.setAttribute('id', `${card.id}`);
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
                 if (parseInt(card.status_id) === 0) {
