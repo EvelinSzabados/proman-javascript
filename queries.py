@@ -27,5 +27,9 @@ def check_username():
     return connection.execute_select(''' SELECT username FROM registration''')
 
 
+def login():
+    return connection.execute_select(''' SELECT username,password FROM registration''')
+
+
 def get_cards_by_board_id(board_id):
     return connection.execute_select(''' SELECT * FROM cards WHERE board_id = %(board_id)s''', {'board_id': board_id})

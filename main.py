@@ -1,11 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect, jsonify, json
+from flask import Flask, render_template, url_for, request, redirect, jsonify, json, session
 from util import json_response
 import bcrypt
 
 import data_handler, persistence, queries
 
 app = Flask(__name__)
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route("/")
 def index():
@@ -93,6 +93,26 @@ def register():
         return render_template('register.html', message=message)
 
     return render_template('register.html', message="none")
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+
+        login_username = request.form.get('username')
+        login_password = request.form.get('password')
+        existing_data = queries.login()
+        for user in existing_data:
+            hash_to_check = user['password']
+            hashed_bytes_password = hash_to_check.encode('utf-8')
+            is_match = bcrypt.checkpw(login_password.encode('utf-8'), hashed_bytes_password)
+            if user['username'] == login_username and is_match is True:
+                session['username'] = login_username
+                return redirect(url_for('index', is_match=is_match))
+
+        return render_template('login.html', is_match=False)
+    return render_template('login.html', is_match="none")
+
 
 def main():
     app.run(debug=True)
