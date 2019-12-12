@@ -37,3 +37,9 @@ def create_new_card(board_id):
 def update_card_title(new_title, card_id):
     return connection.execute_select('UPDATE cards SET title = %(new_title)s'
                                      'WHERE id= %(card_id)s', {'new_title': new_title, 'card_id': card_id})
+
+
+def delete_card(card_id):
+    return connection.execute_select('''DELETE FROM cards 
+                                        WHERE cards.id = %(card_id)s''',
+                                     {'card_id': card_id})

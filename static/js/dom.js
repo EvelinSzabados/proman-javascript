@@ -122,6 +122,14 @@ export let dom = {
             cardTitle.setAttribute('contenteditable', 'true');
             cardTitle.spellcheck = false;
 
+
+            const delete_card =cloneCard.querySelector('.card-remove')
+            delete_card.addEventListener('click', function(){
+                cardContainer.remove()
+                dataHandler.deleteCard(card.id, console.log)
+            })
+
+
             if (parseInt(card.status_id) === 0) {
                 columnNew.appendChild(cloneCard);
             }
@@ -147,7 +155,6 @@ export let dom = {
         boardColumns.appendChild(cloneColumn);
         dom.getStatuses();
 
-
     },
     load_new_card: function (data) {
         dataHandler.getCardsByBoardId(data.boardId, function (cards) {
@@ -172,6 +179,13 @@ export let dom = {
             cardTitle.spellcheck = false;
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
+
+            const delete_card =cloneCard.querySelector('.card-remove')
+            delete_card.addEventListener('click', function(){
+                cardContainer.remove()
+                dataHandler.deleteCard(card.id, console.log)
+            })
+
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;
                 cardContainer.setAttribute('id', `${card.id}`);
