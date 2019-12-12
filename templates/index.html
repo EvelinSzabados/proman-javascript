@@ -35,20 +35,31 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            {% if session['username']| length == 0 %}
             <li class="nav-item">
                 <a class="nav-link" href="register">Registration</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="login">Login</a>
             </li>
+            {% endif %}
+         {% if session['username']| length != 0 %}
             <li class="nav-item">
                 <a class="nav-link" href="logout">Logout</a>
             </li>
+             <li class="nav link user"><span class="user_log">Logged in user: {{ session['username'] }}</span></li>
+        {% endif %}
         </ul>
+
 
     </div>
 </nav>
+{#{% if session['username']| length != 0 %}#}
+{#    {{ session['username'] }}#}
+{#{% endif %}#}
 <h1 class="main-header">ProMan</h1>
+{% block content %}
 <!-- Emmet: .board-container>section.board*3>.board-header>(span.board-title{Board $}+button.board-add{Add Card}+button.board-toggle>i.fas.fa-chevron-down)^.board-columns>((.board-column>.board-column-title{New}+.board-column-content>.card*5>(.card-remove>i.fas.fa-trash-alt^.card-title{Card $}))+(.board-column>.board-column-title{In Progress}+.board-column-content>.card*5>(.card-remove>i.fas.fa-trash-alt^.card-title{Card $}))+(.board-column>.board-column-title{Testing}+.board-column-content>.card*5>(.card-remove>i.fas.fa-trash-alt^.card-title{Card $}))+(.board-column>.board-column-title{Done}+.board-column-content>.card*5>(.card-remove>i.fas.fa-trash-alt^.card-title{Card $}))) -->
 <div class="board-container" id="boards">
     <button class="create_board" id="add-board">Create board</button>
@@ -56,6 +67,7 @@
 
 </div>
 {% include 'templates.html' %}
+{% endblock %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

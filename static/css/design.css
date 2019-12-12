@@ -38,6 +38,26 @@ button:focus {outline:0;}
     background-color: rgba(0,0,0,0.1);
 
 }
+
+.container-box{
+    margin: 0 auto;
+    width: 40%;
+    background-color: rgba(255,255,255,0.7);
+    padding: 30px 30px 50px 30px;
+}
+
+.user_log{
+
+    font-weight: bold;
+    font-size: 20px;
+    color:#546e7a;
+    margin: 5px;
+}
+
+.container-box h1{
+    margin: 10px auto;
+    text-align: center;
+}
 .clear{
     clear: left;
 }

@@ -7,6 +7,7 @@ import data_handler, persistence, queries
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
 @app.route("/")
 def index():
     """
@@ -119,6 +120,7 @@ def new_card_title():
     new_card_data = queries.get_cards_by_board_id(returned_card_id[0]['id'])
     return new_card_data
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     message = "false"
@@ -168,14 +170,13 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+
 def main():
     app.run(debug=True)
 
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
-
-
 
 
 if __name__ == '__main__':
