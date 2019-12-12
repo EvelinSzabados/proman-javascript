@@ -71,12 +71,23 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_by_board_id(board_id)
 
 
-@app.route("/create-new-status", methods=['GET', 'POST'])
+@app.route("/change_status", methods=['GET', 'POST'])
 @json_response
-def create_new_status():
-    new_statuses = request.get_json()
-    persistence.write_board_to_csv(new_statuses, 'data/statuses.csv')
-    return new_statuses
+def change_status():
+    new_status_data = request.get_json()
+
+    column_id = new_status_data['column_id']
+    card_title = new_status_data['card_title']
+
+    if column_id == 'column-in-progress':
+        status_id = 1
+    elif column_id == 'column-testing':
+        status_id = 2
+    elif column_id == 'column-done':
+        status_id = 3
+    else:
+        status_id = 0
+    queries.modify_card_status_by_card_title(card_title, status_id)
 
 
 def main():

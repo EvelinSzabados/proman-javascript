@@ -13,6 +13,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
+
     },
     templateBoards: function (board_data) {
         // get templates and create clone
@@ -67,14 +68,22 @@ export let dom = {
         for (let board of boards) {
 
             dom.templateBoards(board);
-            dom.loadCards(board.id)
+            dom.loadCards(board.id);
 
 
         }
 
 
     },
-    showStatuses: function (statuses) {
+    getStatuses: function () {
+        // const columnNew = document.querySelector('#column-new');
+        // const columnProgress = document.querySelector('#column-in-progress');
+        // const columnTest = document.querySelector('#column-testing');
+        // const columnDone = document.querySelector('#column-done');
+        // dragula([columnNew, columnProgress, columnTest, columnDone])
+        //     .on('drop', function (el) {
+        //         console.log('hello');
+        //     })
 
     },
 
@@ -88,8 +97,6 @@ export let dom = {
     showCards: function (board_id, cards) {
 
         const templateCard = document.querySelector('#card-template');
-
-
         const templateColumn = document.querySelector('#column-template');
         const cloneColumn = document.importNode(templateColumn.content, true);
 
@@ -97,6 +104,11 @@ export let dom = {
         const columnProgress = cloneColumn.querySelector('#column-in-progress');
         const columnTest = cloneColumn.querySelector('#column-testing');
         const columnDone = cloneColumn.querySelector('#column-done');
+        dragula([columnNew, columnProgress, columnTest, columnDone]).on('drop', function (el,container) {
+            let draggedTitle = el.innerText;
+            let column_id = container.id;
+            dataHandler.changeStatuses(column_id,draggedTitle,console.log)
+  });
 
 
         const boardColumns = document.querySelector(`#section_board_${board_id} .board-columns`);
@@ -120,6 +132,8 @@ export let dom = {
             }
         }
         boardColumns.appendChild(cloneColumn);
+        dom.getStatuses();
+
     },
     load_new_card: function (data) {
         dataHandler.getCardsByBoardId(data.boardId, function (cards) {
