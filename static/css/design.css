@@ -97,10 +97,25 @@ section.board {
     background-color: darkgoldenrod;
     font-size: 15px;
     border-radius: 15px;
+    margin: 0 10px 20px 10px;
+}
+.board-delete {
+    background-color:#ff4444;
+    font-size: 15px;
+    border-radius: 25px;
+    margin:12px;
+    padding: 5px 8px;
+    float:right;
+
 }
 
 .board-add:hover {
     background-color: chocolate;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.board-delete:hover {
+    background-color: darkred;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -190,6 +205,14 @@ section.board {
 }
 
 .card-remove {
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.board-remove {
     display: block;
     position: absolute;
     top: 4px;

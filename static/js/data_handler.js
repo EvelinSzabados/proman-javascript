@@ -123,6 +123,12 @@ export let dataHandler = {
             this._data = response;
             callback(response);
         });
+    },
+    deleteBoard: function (board_id, callback) {
+        this._api_post('/delete-board', board_id, (response) => {
+            this._data = response;
+            callback(response);
+        })
     }
 
     // here comes more features

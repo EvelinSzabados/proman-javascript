@@ -23,6 +23,16 @@ export let dom = {
         //get elements of template and set attributes
         const section = clone.querySelector('.board');
         section.setAttribute('id', `section_board_${board_data.id}`);
+        const delete_board = clone.querySelector('.board-delete');
+        delete_board.addEventListener('click', function () {
+            let result = confirm("Want to delete?");
+            if (result) {
+                section.remove();
+                dataHandler.deleteBoard(board_data.id, console.log)
+            }
+
+        });
+
 
         const new_card_btn = clone.querySelector('.board-add');
         new_card_btn.addEventListener('click', function () {
@@ -69,22 +79,7 @@ export let dom = {
 
             dom.templateBoards(board);
             dom.loadCards(board.id);
-
-
         }
-
-
-    },
-    getStatuses: function () {
-        // const columnNew = document.querySelector('#column-new');
-        // const columnProgress = document.querySelector('#column-in-progress');
-        // const columnTest = document.querySelector('#column-testing');
-        // const columnDone = document.querySelector('#column-done');
-        // dragula([columnNew, columnProgress, columnTest, columnDone])
-        //     .on('drop', function (el) {
-        //         console.log('hello');
-        //     })
-
     },
 
     loadCards: function (board_id) {
@@ -123,11 +118,15 @@ export let dom = {
             cardTitle.spellcheck = false;
 
 
-            const delete_card =cloneCard.querySelector('.card-remove')
-            delete_card.addEventListener('click', function(){
-                cardContainer.remove()
-                dataHandler.deleteCard(card.id, console.log)
-            })
+            const delete_card = cloneCard.querySelector('.card-remove');
+            delete_card.addEventListener('click', function () {
+                let result = confirm("Want to delete?");
+                if (result) {
+                    cardContainer.remove();
+                    dataHandler.deleteCard(card.id, console.log)
+                }
+
+            });
 
 
             if (parseInt(card.status_id) === 0) {
@@ -153,7 +152,7 @@ export let dom = {
         }
 
         boardColumns.appendChild(cloneColumn);
-        dom.getStatuses();
+        // dom.getStatuses();
 
     },
     load_new_card: function (data) {
@@ -180,11 +179,15 @@ export let dom = {
             const cardContainer = cloneCard.querySelector('.Card');
             cardContainer.setAttribute('id', `${card.id}`);
 
-            const delete_card =cloneCard.querySelector('.card-remove')
-            delete_card.addEventListener('click', function(){
-                cardContainer.remove()
-                dataHandler.deleteCard(card.id, console.log)
-            })
+            const delete_card = cloneCard.querySelector('.card-remove');
+            delete_card.addEventListener('click', function () {
+                let result = confirm("Want to delete?");
+                if (result){
+                    cardContainer.remove();
+                    dataHandler.deleteCard(card.id, console.log)
+
+                }
+            });
 
             if (card.board_id === data.boardId && card.id === data.cardId) {
                 cardTitle.textContent = card.title;

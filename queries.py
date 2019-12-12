@@ -43,3 +43,15 @@ def delete_card(card_id):
     return connection.execute_select('''DELETE FROM cards 
                                         WHERE cards.id = %(card_id)s''',
                                      {'card_id': card_id})
+
+
+def delete_card_by_board_id(board_id):
+    return connection.execute_select('''DELETE FROM cards 
+                                        WHERE board_id = %(board_id)s''',
+                                     {'board_id': board_id})
+
+
+def delete_board(board_id):
+    return connection.execute_select('''DELETE FROM boards 
+                                        WHERE id = %(board_id)s''',
+                                     {'board_id': board_id})

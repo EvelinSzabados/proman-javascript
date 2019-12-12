@@ -59,6 +59,17 @@ def new_card():
 def delete_card():
     card_id = request.get_json()
     queries.delete_card(card_id)
+    return card_id
+
+
+@app.route("/delete-board", methods=['POST'])
+@json_response
+def delete_board():
+    board_id = request.get_json()
+    queries.delete_card_by_board_id(board_id)
+    queries.delete_board(board_id)
+
+    return 'Board deleted'
 
 
 @app.route("/new-board-title", methods=['POST'])
